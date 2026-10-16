@@ -1,0 +1,26 @@
+# This folder is a local private preparation, not permission to publish it.
+node_modules/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.tmp/
+coverage/
+results/
+*.log
+# Never stage visitor recordings or private report files here.
+*.m4a
+*.mp3
+*.flac
+*.scores.csv
+*.wav
+!web/demo/source.wav
+!web/demo/baseline.wav
+!web/demo/candidate.wav
+.openai/
+.sites-local/
+*.tar.gz
+*.zip

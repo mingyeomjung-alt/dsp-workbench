@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="오디오 처리 전후의 누락·반복 후보를 브라우저 안에서 비교하는 DSP Workbench">
+  <meta name="color-scheme" content="light">
+  <title>DSP Workbench · 오디오 회귀 검사</title>
+  <link rel="stylesheet" href="./app.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">작업 영역으로 이동</a>
+  <svg class="svg-library" aria-hidden="true"><defs>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10v4m4-8v12m5-16v20m5-16v12m4-8v4"/></symbol>
+    <symbol id="i-pair" viewBox="0 0 24 24"><path d="M4 4h6v16H4zm10 0h6v16h-6M7 8v8m10-6v4"/></symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7V5Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </defs></svg>
+  <aside class="sidebar" aria-label="주 메뉴">
+    <a class="brand" href="./" aria-label="DSP Workbench 홈"><span class="brand-mark"><svg><use href="#i-wave"/></svg></span><span>DSP<span class="brand-sub">Workbench</span></span></a>
+    <div class="sidebar-kicker">AUDIO TESTING WORKSPACE</div>
+    <nav class="main-nav" aria-label="검사 방식">
+      <button class="nav-item active" data-mode="pair" aria-current="page"><svg><use href="#i-pair"/></svg>개별 비교<span>01</span></button>
+      <button class="nav-item" data-mode="suite"><svg><use href="#i-stack"/></svg>회귀 검사<span>02</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="note-dot"></span><p>음성을 보내지 않는<br><strong>브라우저 로컬 검사</strong></p><small>검사는 이 탭의 메모리에서 실행됩니다. 업로드 서버를 사용하지 않습니다.</small></div>
+    <button class="sidebar-help" id="help-button"><svg><use href="#i-info"/></svg>지원 범위 · 사용 안내</button>
+    <div class="sidebar-footer"><span class="version-pill">WEB EDITION</span><span>Private workspace</span></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar"><div class="breadcrumb">워크스페이스 <span>/</span> <strong id="breadcrumb-title">개별 비교</strong></div><div class="runtime-status" id="runtime-status" role="status"><span class="status-dot"></span><span id="runtime-label">실행 환경 준비 전</span></div></header>
+    <main id="workspace">
+      <div class="page-heading"><div><div class="eyebrow">SIGNAL IN. EVIDENCE OUT.</div><h1 id="page-title">소리의 변화를, 구간으로 확인하세요.</h1><p id="page-description">같은 원본의 처리 전후 WAV를 비교해 누락·인접 반복 후보를 찾습니다.</p></div><button class="button button-white" id="demo-button"><svg><use href="#i-play"/></svg>예시 파일로 시작</button></div>
+      <div class="privacy-banner"><svg><use href="#i-lock"/></svg><p><strong>오디오 파일은 외부로 전송되지 않습니다.</strong><span>첫 실행 시 Python·NumPy·SciPy 실행 환경을 내려받습니다. 파일과 결과는 새로고침하면 사라집니다.</span></p><span class="local-badge">ON YOUR DEVICE</span></div>
+      <div class="workspace-grid">
+        <section class="panel input-panel" aria-labelledby="input-title"><div class="section-heading"><div><span class="step-index">01</span><h2 id="input-title">비교할 파일</h2></div><span class="subtle-tag">WAV · PCM16 · 모노</span></div>
+          <div class="input-description" id="input-description">서로 따로 녹음한 파일이 아닌, <strong>같은 원본과 그 처리 결과</strong>를 선택하세요.</div>
+          <div id="pair-files" class="file-grid"></div>
+          <div id="suite-inputs" hidden><div class="version-grid"><label>기준 버전 <input id="baseline-version" maxlength="80" placeholder="예: release-1.0" autocomplete="off"></label><label>새 버전 <input id="candidate-version" maxlength="80" placeholder="예: release-1.1" autocomplete="off"></label></div><p class="field-hint">버전명은 직접 확인한 빌드 이름입니다. 기준 파일을 자동 교체하거나 승인하지 않습니다.</p><div id="suite-cases"></div><button class="button button-add" id="add-case"><svg><use href="#i-plus"/></svg>검사 사례 추가 <span id="case-count">1 / 6</span></button></div>
+          <div class="input-footer"><span class="tiny-dot"></span>파일당 2–30초 · 최대 10 MB · 8 / 16 / 44.1 / 48 kHz <span>전체 최대 64 MiB</span></div>
+        </section>
+        <aside class="panel settings-panel" aria-labelledby="settings-title"><div class="section-heading"><div><span class="step-index">02</span><h2 id="settings-title">검사 설정</h2></div></div><p class="settings-intro">실제로 적용한 처리만 선택하세요.</p>
+          <fieldset class="processing-options"><legend class="sr-only">원본에 적용한 처리</legend><label class="checkbox-card"><input type="checkbox" id="allow-gain"><span><strong>음량을 조절했어요</strong><small>이득 변경을 허용하는 비교</small></span></label><label class="checkbox-card"><input type="checkbox" id="allow-resampling"><span><strong>샘플레이트를 바꿨어요</strong><small>실제 리샘플링을 수행한 경우</small></span></label></fieldset>
+          <details class="advanced-settings"><summary>고급 검사 방식<span>선택 사항</span></summary><label for="engine-select">검사 엔진</label><select id="engine-select"><option value="v1">기본 비교 · v1</option><option value="v9">전역 문맥 후보 · v9</option><option value="v10">짧은 내부 구간 · v10</option><option value="v11">내부 + 시작·끝 손실 · v11</option><option value="v12">명시적 FFT 변환 경로 · v12</option></select><p id="engine-note" class="engine-note"></p><label id="fft-confirm-label" class="fft-confirm" hidden><input type="checkbox" id="fft-confirm"><span>실제 처리가 SciPy FFT 주기 신호 방식 48→16 kHz → PCM16 반올림 → 편집 순서임을 확인합니다.</span></label></details>
+          <p id="mode-warning" class="inline-warning" hidden></p><div class="run-area"><button id="run-button" class="button button-primary"><span id="run-label">비교 검사 시작</span><svg><use href="#i-arrow"/></svg></button><button id="cancel-button" class="button button-cancel" hidden>검사 취소</button><p class="run-note" id="run-note">파일을 선택하면 검사를 시작할 수 있습니다.</p></div>
+        </aside>
+      </div>
+      <section class="error-banner" id="error-banner" role="alert" hidden><svg><use href="#i-info"/></svg><div><strong id="error-message"></strong><small id="error-code"></small></div><button id="dismiss-error" class="icon-button" aria-label="오류 안내 닫기"><svg><use href="#i-close"/></svg></button></section>
+      <section class="panel results-panel" id="results-panel" aria-labelledby="results-title" aria-busy="false"><div class="section-heading"><div><span class="step-index">03</span><h2 id="results-title">검사 결과</h2><span class="result-count" id="result-count" hidden></span></div><div class="result-actions" id="result-actions" hidden><button class="button button-small" id="download-json"><svg><use href="#i-download"/></svg>JSON</button><button class="button button-small" id="download-html"><svg><use href="#i-download"/></svg>HTML 보고서</button></div></div>
+        <div class="empty-state" id="empty-state"><div class="empty-mark"><svg><use href="#i-wave"/></svg></div><h3>변화가 생긴 지점부터 살펴보세요.</h3><p>파일을 선택하고 검사를 시작하면<br>대응 위치와 확인이 필요한 후보를 보여드립니다.</p><div class="empty-steps"><span>파일 선택</span><i>→</i><span>신호 비교</span><i>→</i><span>구간 확인</span></div></div>
+        <div class="busy-state" id="busy-state" hidden><span class="spinner"></span><div><h3>브라우저에서 신호를 분석하고 있습니다.</h3><p id="progress-message" role="status" aria-live="polite">실행 환경을 준비하고 있습니다.</p><small>창을 열어 두세요. 다른 곳에 오디오를 전송하지 않습니다.</small></div></div>
+        <div id="result-content" hidden><div id="result-summary"></div><div id="candidate-list"></div><details class="report-details"><summary>전체 검사 보고서<span>검사 조건 · 입력 해시 · 판단 근거</span></summary><iframe id="report-frame" sandbox="" title="전체 정적 검사 보고서" referrerpolicy="no-referrer"></iframe></details><details class="technical-details"><summary>실행 환경과 결과 JSON</summary><pre id="technical-json"></pre></details></div>
+      </section>
+      <footer class="main-footer"><span>DSP Workbench</span><p>시간적 결함 후보 진단 도구 · 전체 음질 승인이나 실제 편집 원인 확정이 아닙니다.</p><button id="footer-help">사용 안내</button><button id="clear-button">파일과 결과 비우기</button></footer>
+    </main>
+  </div>
+  <dialog id="help-dialog"><div class="dialog-heading"><h2>검사를 시작하기 전에</h2><button id="close-help" class="icon-button" aria-label="안내 닫기"><svg><use href="#i-close"/></svg></button></div><div class="help-body"><h3>어떤 파일을 비교하나요?</h3><p>원본 WAV와 그 원본을 처리한 결과 WAV를 사용합니다. 회귀 검사는 같은 원본의 기준 버전 결과와 새 버전 결과를 함께 비교합니다. 서로 독립적으로 녹음한 파일이나 MP3·M4A는 대상이 아닙니다.</p><h3>지원하는 입력</h3><p>PCM16 모노 WAV, 2–30초, 8 / 16 / 44.1 / 48 kHz, 파일당 최대 10,000,000바이트. 한 번에 총 64 MiB, 회귀 검사는 최대 6사례입니다. 파일은 자동 변환하지 않습니다.</p><h3>결과를 읽는 방법</h3><p><strong>후보 없음</strong>은 지원 범위에서 누락·인접 반복 후보를 관측하지 못했다는 뜻입니다. <strong>검토 필요</strong>는 해당 위치를 직접 듣고 처리 의도를 확인해야 한다는 뜻입니다. <strong>판단 보류</strong>와 <strong>비교 불가</strong>는 정상 판정이 아닙니다.</p><h3>파일은 어디로 가나요?</h3><p>검사는 브라우저 안의 Python Worker에서 실행됩니다. 실행 환경과 예시 파일만 내려받으며, 선택한 오디오를 서버에 보내거나 브라우저 저장소에 저장하지 않습니다. 보고서에는 파일 해시와 진단 내용이 담깁니다. 보관하려면 직접 내려받으세요.</p><h3>회귀 검사의 의미</h3><p>신규·유지·이번 미관측은 두 결과에서 관측한 후보의 관계입니다. 해결 여부·품질 개선·배포 승인을 자동 확정하지 않습니다. 후보 유무와 현재 검사 상태를 별도로 확인하세요.</p><h3>처음 실행하는 경우</h3><p>실행 환경 다운로드로 시간이 걸릴 수 있습니다. 데스크톱 최신 브라우저를 권장합니다. 메모리가 부족하거나 Worker 실행이 제한되면 오류를 안내하며 통과로 처리하지 않습니다.</p></div></dialog>
+</body>
+</html>
