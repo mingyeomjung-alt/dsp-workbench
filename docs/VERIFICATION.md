@@ -1,6 +1,6 @@
 # Verification scope
 
-This is a locally prepared private prototype, not a published or commercially validated product. The browser adapter is `0.1.20-web.2`; the frozen DSP engine remains **0.1.20** with its existing default `v1`, numerical rules and thresholds. The screenshot shows an earlier, actually observed run of the same synthetic example, not a new compatibility test of this adapter revision.
+This is a public experimental prototype under a [limited evaluation licence](../LICENSE.md), not a commercially validated product or a general open-source release. The browser adapter is `0.1.20-web.2`; the frozen DSP engine remains **0.1.20** with its existing default `v1`, numerical rules and thresholds. Repository publication changes no detector, runtime or performance evidence. The screenshot shows an earlier, actually observed run of the same synthetic example, not a new compatibility test of this adapter revision.
 
 ## Checks included here
 
@@ -23,4 +23,4 @@ On that machine the maximum-source suite took approximately 4.8 seconds in Node/
 - This revision has not been deployed to the existing private hosted Site. New local-browser UI, browser CSP/runtime loading, mobile limits and an independent customer computer remain unverified for this revision.
 - GitHub Actions checks are manual-only and have not been executed on GitHub. A Windows symlink fixture can be skipped when the operating system does not permit its creation; that path is not claimed as tested.
 
-No check grants publishing permission, an open-source licence, customer access, automatic audio approval, or a claim that a real customer saves time. Those require separate decisions and real use.
+Public repository access and limited experimental use are governed by the [evaluation licence](../LICENSE.md) and [distribution status](../DISTRIBUTION.md), not by passing checks. No check grants commercial-use or redistribution permission, automatic audio approval, or a claim that a real customer saves time. Actual workflow usefulness still requires real use and observation.

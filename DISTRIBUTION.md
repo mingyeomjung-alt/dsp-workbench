@@ -1,49 +1,47 @@
-# Owner-private repository — not an open-source release
+# Public experimental evaluation
 
-The owner has authorized uploading only this reviewed directory to an
-owner-private GitHub repository. This is not approval for a public release,
-GitHub Pages, invitations, external distribution or an open-source licence.
+On 2026-10-17 the owner authorized making this reviewed repository public so
+people can find it, try it locally, and leave feedback. The owner selected
+**evaluation only: commercial use and redistribution require separate permission**.
+See [LICENSE.md](LICENSE.md) for the actual project-code permission. This is
+source-available evaluation software, **not an open-source licence or a
+commercially validated release**. Third-party components retain their own terms.
 
-On 2026-10-17 the owner requested preserving the experimental project rather
-than proceeding with customer meetings. The repository now also includes the
-reviewed frozen DSP engine source/test archive described in
-[the checkpoint notes](docs/CHECKPOINT.md). Customer outreach and external trials
-are on hold. No repository invitation, new licence, public release or sale is
-authorized by this checkpoint. The repository remains editable for later work;
-it has not been made read-only using GitHub's archive setting.
-No open-source license or permission to redistribute proprietary project code is
-granted by preparing this folder. Third-party components retain their own terms.
+This decision supersedes the earlier owner-private storage restriction for this
+repository. The [checkpoint notes](docs/CHECKPOINT.md) retain the historical
+private-save decision and frozen source archive hashes. `bundle-manifest.json`
+describes the earlier runtime-payload preparation, not current visibility.
 
-`bundle-manifest.json` records the earlier local runtime-payload preparation.
-Previously created ZIPs and inventories are historical snapshots, not the
-current repository's publication or permission state. This document states the
-current owner-private scope.
+## Publication boundary
 
-Only this reviewed directory is a candidate for later repository setup. **Never
-upload its parent workspace.** That workspace contains historical results, private
-recordings, models, datasets and unrelated projects that are not part of this tool.
+Only this reviewed repository and its reviewed Git history are published. **Never
+upload its parent workspace.** Personal recordings, downloaded datasets/models,
+credentials, unrelated projects and full historical evaluation stores are not
+part of the public project. The three demo WAVs are owned synthetic examples.
+The included engine source ZIP and wheel expose project code; they are not
+encrypted or code-hidden. Public copies and GitHub forks may remain available
+even if the repository later becomes private. Restricted evaluation terms are
+not a technical copy-protection mechanism.
 
-Before any external use, the owner must decide the recipient/access scope, the
-project-code license or evaluation terms, dependency notices, support and feedback
-handling. This document is a preparation checklist, not legal clearance.
+No GitHub Pages deployment, new hosted site, package-registry publication, paid
+offer, customer invitation or support contract is part of this decision. The
+existing separately hosted private site is unchanged. The local Node server
+binds to 127.0.0.1, has no account/login layer, and must not be exposed as an
+internet-facing application server. `package.json` keeps `private: true` to
+prevent accidental npm publication; that flag does not control GitHub visibility.
 
-The browser downloads the complete executable Python wheel. Any authorized browser
-user can inspect that code. Private repository or Site access is not code secrecy.
-The local Node server has no account/login layer: it binds to 127.0.0.1 only and
-must not be used as an internet-facing server. The existing owner-private hosted
-Site is separate and has not been modified by this preparation.
+The supplied Actions workflow remains manual-only, read-only and synthetic.
+Passing checks are not field accuracy, customer utility or whole-audio approval.
+The engine, thresholds, runtime assets and current browser verification limits
+are unchanged by publication.
 
-GitHub Pages would be an optional later **static** hosting choice; Python DSP runs
-in the visitor's browser, not on GitHub's servers. A private repository does not
-automatically make a Pages site private. Do not enable Pages, make a public
-repository, publish a release/package, or send an invitation without owner approval.
-No Pages deployment workflow or automatic release is included.
+## Feedback
 
-The supplied Actions workflow is manual-only, read-only and runs synthetic
-engineering checks. It has not run on GitHub yet. A successful check is not field
-accuracy, customer utility or a complete-audio approval claim.
-
-For feedback, never attach private audio, original reports, credentials, full local
-paths, identifying metadata or sensitive hashes to an issue. Use a project-owned
-synthetic reproducer and sanitized text. There is no configured private intake
-channel or promised support contract in this preparation.
+Use [workflow feedback](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml)
+or [bug reports](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml).
+**Issues and attachments are public.** Do not submit private audio, recordings of
+people, customer details, credentials, full paths, private filenames, sensitive
+hashes or unreviewed exported reports. Use synthetic reproductions and sanitized
+text. No analytics or automatic audio/result collection is added. GitHub itself
+handles account data and ordinary repository/issue traffic under its own terms.
+See [SECURITY.md](SECURITY.md) for handling sensitive security findings.

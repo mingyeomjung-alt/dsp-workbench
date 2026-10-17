@@ -1,6 +1,6 @@
 # 첫 사용 점검 / First trial
 
-이 문서는 실행 점검표이며 외부 배포 허가나 평가용 사용권을 부여하지 않습니다. 수신자·접근·이용 조건은 소유자가 별도로 승인해야 합니다. [배포 상태](../DISTRIBUTION.md)를 먼저 확인하세요.
+공개 실험 버전의 로컬 실행 점검표입니다. [평가용 이용 조건](../LICENSE.md)에 따라 사용해 볼 수 있으며, 일반적인 오픈소스·상업적 사용·재배포 허가는 아닙니다. [배포 상태](../DISTRIBUTION.md)를 먼저 확인하세요.
 
 ## 1. 예제로 실행 확인 — 환경 준비 후 약 5–10분
 
@@ -39,6 +39,6 @@ OS / 브라우저 / Node 버전:
 다시 사용할 의향과 이유:
 ```
 
-현재는 외부 피드백 접수 채널이나 지원 계약이 설정되지 않았습니다. 승인된 저장소가 나중에 생기면 개인정보를 제거한 텍스트만 이슈 양식에 옮깁니다. 문의·업로드·오디오 제공이 필수인 것은 아닙니다.
+공유하고 싶다면 개인정보를 제거한 텍스트만 [사용 경험 양식](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml)에 옮기세요. 실행 오류는 [오류 보고 양식](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml)을 사용할 수 있습니다. **이슈와 첨부물은 공개되므로 오디오·비공개 보고서·인증정보는 올리지 마세요.** 비공개 접수 채널이나 지원 계약은 없으며, 문의·오디오 제공은 필수가 아닙니다.
 
-English: Extract the archive, open a terminal in `dsp-workbench`, run `npm start`, and open its loopback URL. Load the owned example, run the comparison, confirm the 2.0–2.1 s deletion candidate, listen to both regions, and save JSON/HTML. Try cancel/re-run only if the job is still active; otherwise mark it untested. Stop the server with Ctrl+C. Record setup and usability separately from real-workflow usefulness. Do not post private audio, names, paths, hashes or unreviewed reports. No redistribution or evaluation rights are granted by this checklist.
+English: Clone or download the public repository, open a terminal in the folder containing `package.json`, run `npm start`, and open its loopback URL. Load the owned example, run the comparison, confirm the 2.0–2.1 s deletion candidate, listen to both regions, and save JSON/HTML. Try cancel/re-run only if the job is still active; otherwise mark it untested. Stop the server with Ctrl+C. Record setup and usability separately from real-workflow usefulness. Use is limited by the [evaluation licence](../LICENSE.md). Feedback and bug-report links above lead to public GitHub issues: do not post private audio, names, paths, hashes, credentials or unreviewed reports. No private intake or support contract is provided.

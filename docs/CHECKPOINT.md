@@ -1,5 +1,12 @@
 # Experimental project checkpoint — 2026-10-17
 
+> Historical private checkpoint. A later owner decision on the same date
+> authorizes public experimental evaluation of this reviewed repository under
+> [the current evaluation terms](../LICENSE.md). The private-only and external-
+> trial restrictions below record the earlier decision, not current visibility.
+> The frozen archive, runtime version and hashes remain unchanged. See the
+> [current distribution status](../DISTRIBUTION.md) and [public quick start](../README.md).
+
 ## Decision / 보존 상태
 
 The owner requested saving the current project to the existing **private** GitHub repository because it remains too experimental for customer meetings. Customer interviews, outreach, invitations and external trials are **on hold at the owner's request**. This does not claim the product is complete or commercially validated, and does not authorize publication or a new licence. No further feature work is part of this checkpoint.

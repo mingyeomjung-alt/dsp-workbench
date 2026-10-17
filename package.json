@@ -1,8 +1,9 @@
 {
-  "name": "dsp-workbench-private-preview",
+  "name": "dsp-workbench-evaluation",
   "version": "0.1.20-web.2",
   "private": true,
-  "description": "Private, dependency-free local preview of DSP Workbench. No audio upload server.",
+  "description": "Public experimental DSP Workbench evaluation. Local audio comparison; no audio upload server.",
+  "license": "SEE LICENSE IN LICENSE.md",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        We are testing usefulness in real audio-processing workflows, not offering automatic quality approval. Please do not post private audio, customer names, confidential code, credentials, private filenames, file hashes, or unreviewed reports. You do not need to identify yourself or your employer.
-        실제 처리 업무에서의 효용을 확인하기 위한 양식입니다. 비공개 오디오·고객명·기밀 코드·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서를 올리지 마세요. 실명·소속은 필요 없습니다.
+        This issue and its attachments are public. We are testing usefulness in real audio-processing workflows, not offering automatic quality approval. Please do not post private audio, customer names, confidential code, credentials, private filenames, file hashes, or unreviewed reports. You do not need to identify yourself or your employer.
+        이 이슈와 첨부파일은 공개됩니다. 실제 처리 업무에서의 효용을 확인하기 위한 양식입니다. 비공개 오디오·고객명·기밀 코드·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서를 올리지 마세요. 실명·소속은 필요 없습니다.
   - type: checkboxes
     id: privacy
     attributes:

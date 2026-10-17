@@ -1,6 +1,6 @@
 # DSP Workbench
 
-**Experimental checkpoint — 2026-10-17.** Saved in an owner-private repository for later development. Customer interviews, outreach and external trials are on hold at the owner's request; this is not a commercial release. The [checkpoint and recovery notes](docs/CHECKPOINT.md) describe the current state and include a reviewed frozen engine source/test archive.
+**Public experimental preview — 2026-10-17.** Try the included example locally and tell us what works or gets in the way. This is not a commercially validated product. The [evaluation licence](LICENSE.md) permits limited experimental evaluation, not general open-source use; commercial use and redistribution require separate permission. See [distribution status](DISTRIBUTION.md).
 
 **Find where audio content may have been cut or repeated after processing.**
 
@@ -29,9 +29,15 @@ This is a temporal-integrity diagnostic, **not** a full audio-quality score, spe
 
 Requirements: **Node.js 20 or later**, a recent desktop browser, and internet access for the browser runtime download. No `npm install` is needed.
 
+Clone the repository and start the local tool:
+
 ```sh
+git clone https://github.com/mingyeomjung-alt/dsp-workbench.git
+cd dsp-workbench
 npm start
 ```
+
+Alternatively, choose **Code → Download ZIP** on GitHub, extract it into a new folder, open a terminal in the extracted folder containing `package.json`, and run `npm start`.
 
 Open the loopback address printed in the terminal. Do not double-click `web/index.html`: browser runtime loading requires HTTP.
 
@@ -70,7 +76,7 @@ The first analysis downloads **Pyodide 0.29.3**, NumPy, and SciPy from a CDN, pl
 
 **64 MiB is the total input-file budget, not a RAM ceiling.** Numerical work and temporary copies need additional memory. Start with one short case on a desktop, and split heavy batches. Failed initialization can be retried; cancellation terminates the execution Worker and discards the previous job. Initialization has a four-minute watchdog and analysis a ten-minute watchdog. These are stuck-job limits, not latency promises. See [verification scope and limits](docs/VERIFICATION.md).
 
-The bundled Node server binds to loopback for local preview and has **no account login**. It is not a customer hosting service or an internet-facing production server. Static hosting is technically possible, but no GitHub Pages deployment is enabled here. **A private GitHub repository does not by itself make a Pages site private.** Browser execution also means an authorized recipient receives the engine wheel; this is not a way to hide the engine's code from that recipient.
+The bundled Node server binds to loopback for local preview and has **no account login**. It is not a customer hosting service or an internet-facing production server. This public repository does not provide a deployed website; no GitHub Pages deployment is enabled here. Browser execution downloads the engine wheel, so that code is visible to anyone who receives it.
 
 ## Checks
 
@@ -88,10 +94,15 @@ That optional check requires Python 3.12 with compatible NumPy / SciPy installed
 
 ## Current stage and feedback
 
-**Private prototype; real customer utility and commercial detection performance remain unvalidated.** The owner has authorized storing this reviewed folder in an owner-private GitHub repository only. No public repository, GitHub Pages deployment, invitation, open-source licence, price, or external support commitment is implied.
+**Public experimental prototype; real workflow usefulness and commercial detection performance remain unvalidated.** You can run the tool locally under the [limited evaluation licence](LICENSE.md). This is not an open-source or commercial release, hosted service, support contract, or automatic audio approval.
 
-The repository's issue forms support reproducible bugs or workflow feedback from authorized users; no outside access has been granted. Describe the processing steps, input format, engine mode, and expected versus observed behavior. **Do not attach customer audio, recordings of people, credentials, private filenames, file hashes, or unreviewed reports to issues.** Use a minimal synthetic reproduction when possible.
+Feedback is welcome, including if setup failed or you tried only the included example:
 
-See [distribution status](DISTRIBUTION.md) and [third-party notices](THIRD_PARTY_NOTICES.md) before handing a copy to another person. Neither this folder nor running its checks grants permission to publish it.
+- [Share workflow feedback](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml): what processing problem do you have, and was this useful?
+- [Report a reproducible bug](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml): processing steps, input format, engine mode, and expected versus observed behavior.
+
+**GitHub issues and their attachments are public. Do not attach customer audio, recordings of people, credentials, private filenames, file hashes, or unreviewed reports.** Use a minimal synthetic reproduction and sanitized text or screenshots. No audio upload or identifying yourself or your employer is needed. There is no configured private intake channel or guaranteed response time.
+
+See [distribution status](DISTRIBUTION.md), the [evaluation licence](LICENSE.md), and [third-party notices](THIRD_PARTY_NOTICES.md) for use conditions. The [checkpoint notes](docs/CHECKPOINT.md) preserve the earlier save decision and source snapshot for later development.
 
 The first useful trial is one real processing workflow: did the tool help locate a cut or repetition faster, and were its warnings useful? Features and customer claims should follow that evidence, not replace it.

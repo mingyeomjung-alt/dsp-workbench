@@ -110,8 +110,8 @@ test("GitHub-project subpaths resolve the same local worker, assets, and demos",
   }
 });
 
-test("README links and screenshots resolve within the prepared repository", () => {
-  const files = walk(root).filter((name) => /(?:^|\/)README(?:\.[A-Za-z-]+)?\.md$/.test(name));
+test("documentation links and screenshots resolve within the reviewed repository", () => {
+  const files = walk(root).filter((name) => /\.md$/.test(name));
   assert.ok(files.includes("README.md"));
   for (const name of files) {
     const markdown = fs.readFileSync(path.join(root, name), "utf8");
@@ -124,6 +124,35 @@ test("README links and screenshots resolve within the prepared repository", () =
       assert.ok(fs.existsSync(target), `Broken README link: ${name} -> ${link}`);
     }
   }
+});
+
+test("public evaluation entry points retain narrow rights and privacy-safe feedback", () => {
+  const licence = fs.readFileSync(path.join(root, "LICENSE.md"), "utf8");
+  assert.match(licence, /solely to\s+evaluate the prototype/);
+  assert.match(licence, /production use is\s+not/);
+  assert.match(licence, /requires separate written permission/);
+  assert.match(licence, /GitHub's Terms of Service/);
+  const packageInfo = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  assert.equal(packageInfo.private, true); // npm publication guard, not GitHub visibility.
+  assert.equal(packageInfo.license, "SEE LICENSE IN LICENSE.md");
+  for (const name of ["README.md", "README.ko.md"]) {
+    const value = fs.readFileSync(path.join(root, name), "utf8");
+    assert.match(value, /git clone https:\/\/github\.com\/mingyeomjung-alt\/dsp-workbench\.git/);
+    assert.match(value, /\[.*?\]\(LICENSE\.md\)/);
+    for (const template of ["bug_report.yml", "usage_feedback.yml"]) {
+      assert.ok(value.includes(`issues/new?template=${template}`), `${name}: ${template}`);
+    }
+  }
+  for (const name of ["bug_report.yml", "usage_feedback.yml"]) {
+    const value = fs.readFileSync(path.join(root, ".github/ISSUE_TEMPLATE", name), "utf8");
+    assert.match(value, /This issue and its attachments are public/);
+    assert.match(value, /required: true/);
+    assert.match(value, /credentials/);
+    assert.match(value, /audio/);
+  }
+  const security = fs.readFileSync(path.join(root, "SECURITY.md"), "utf8");
+  assert.match(security, /Do not put vulnerabilities/);
+  assert.match(security, /without technical exploit details or private information/);
 });
 
 test("page CSP blocks forms, objects, base overrides, and unsandboxed reports", () => {

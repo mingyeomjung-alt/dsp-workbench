@@ -1,4 +1,4 @@
-# This folder is a local private preparation, not permission to publish it.
+# Reviewed public evaluation repository. Never stage private workspace material.
 node_modules/
 .env
 .env.*
