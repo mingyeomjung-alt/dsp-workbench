@@ -101,7 +101,7 @@ python scripts/check_engine.py
 - [사용 경험 남기기](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml): 어떤 처리 문제가 있고, 이 도구가 유용했는지 알려 주세요.
 - [오류 보고하기](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml): 처리 과정, 파일 형식, 엔진 모드, 기대 결과와 실제 결과를 적어 주세요.
 
-**GitHub 이슈와 첨부물은 공개됩니다. 고객 오디오·사람의 녹음·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서는 올리지 마세요.** 가능하면 최소 합성 예제와 개인정보를 제거한 텍스트·화면으로 재현하세요. 오디오 제출이나 실명·소속 공개는 필요하지 않습니다. 비공개 접수 채널이나 응답 시간 보장은 없습니다.
+**GitHub 이슈와 첨부물은 공개됩니다. 고객 오디오·사람의 녹음·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서는 올리지 마세요.** 가능하면 최소 합성 예제와 개인정보를 제거한 텍스트·화면으로 재현하세요. 오디오 제출이나 실명·소속 공개는 필요하지 않습니다. 비공개 오디오 접수나 응답 시간 보장은 없습니다. 민감한 보안 문제만 [SECURITY.md](SECURITY.md)의 비공개 신고 경로를 사용하세요. 이슈 작성에는 GitHub 계정이 필요하지만 공개 예제 다운로드·실행에는 필요하지 않습니다.
 
 이용 범위는 [배포 상태](DISTRIBUTION.md), [평가용 이용 조건](LICENSE.md), [제3자 고지](THIRD_PARTY_NOTICES.md)를 확인하세요. [체크포인트 안내](docs/CHECKPOINT.md)에는 이전 보존 결정과 개발 재개용 소스 보관본을 기록했습니다.
 
