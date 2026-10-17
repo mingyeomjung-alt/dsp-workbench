@@ -1,4 +1,4 @@
-name: Workflow feedback / 사용 경험
+name: Workflow feedback
 description: Explain the processing problem and whether the diagnostic helped.
 title: "[Feedback] "
 labels: []
@@ -7,42 +7,41 @@ body:
     attributes:
       value: |
         This issue and its attachments are public. We are testing usefulness in real audio-processing workflows, not offering automatic quality approval. Please do not post private audio, customer names, confidential code, credentials, private filenames, file hashes, or unreviewed reports. You do not need to identify yourself or your employer.
-        이 이슈와 첨부파일은 공개됩니다. 실제 처리 업무에서의 효용을 확인하기 위한 양식입니다. 비공개 오디오·고객명·기밀 코드·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서를 올리지 마세요. 실명·소속은 필요 없습니다.
   - type: checkboxes
     id: privacy
     attributes:
-      label: Privacy / 개인정보 확인
+      label: Privacy
       options:
-        - label: I have removed private information, private filenames, hashes, and audio. / 개인정보·비공개 파일명·해시·오디오를 포함하지 않았습니다.
+        - label: I have removed private information, private filenames, hashes, and audio.
           required: true
   - type: textarea
     id: workflow
     attributes:
-      label: Workflow and problem / 처리 흐름과 문제
+      label: Workflow and problem
       description: What processing do you do, and how do you currently find missing or repeated audio? A brief description is enough.
     validations:
       required: true
   - type: dropdown
     id: tried
     attributes:
-      label: Trial status / 사용 여부
+      label: Trial status
       options:
-        - Have not tried it yet / 아직 사용 전
-        - Included synthetic example only / 포함된 합성 예제만 사용
-        - My own supported processing pair / 지원 범위의 실제 처리 파일로 사용
+        - Have not tried it yet
+        - Included synthetic example only
+        - My own supported processing pair
     validations:
       required: true
   - type: textarea
     id: value
     attributes:
-      label: What helped or did not / 유용했던 점과 한계
+      label: What helped or did not
       description: Did a location, playback, warning, or withheld result help? Did it shorten investigation, miss a known issue, or add unnecessary review? Approximate observations are welcome; no measurements are required.
     validations:
       required: true
   - type: textarea
     id: next
     attributes:
-      label: Would you use it again? / 재사용에 필요한 것 (optional)
+      label: Would you use it again? (optional)
       description: What would make it useful in your next code change? This is feedback, not a purchase commitment or a request to publish data.
     validations:
       required: false

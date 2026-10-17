@@ -1,44 +1,62 @@
-# 첫 사용 점검 / First trial
+# First-trial checklist
 
-공개 실험 버전의 로컬 실행 점검표입니다. [평가용 이용 조건](../LICENSE.md)에 따라 사용해 볼 수 있으며, 일반적인 오픈소스·상업적 사용·재배포 허가는 아닙니다. [배포 상태](../DISTRIBUTION.md)를 먼저 확인하세요.
+Use this checklist to try the public experimental preview locally under the
+[limited evaluation licence](../LICENSE.md). This is not a general open-source,
+commercial-use, or redistribution permission. Read the
+[distribution status](../DISTRIBUTION.md) first.
 
-## 1. 예제로 실행 확인 — 환경 준비 후 약 5–10분
+## 1. Check the included example — about 5–10 minutes after setup
 
-Node.js 20 이상과 최신 데스크톱 브라우저가 필요합니다. ZIP을 새 폴더에 풀고 `package.json`이 있는 `dsp-workbench` 폴더에서 `npm start`를 실행한 뒤 표시된 로컬 주소를 엽니다. `npm install`은 필요 없습니다. 첫 실행 환경 다운로드 시간은 별도로 기록하세요.
+You need Node.js 20 or later and a recent desktop browser. Extract the downloaded
+ZIP into a new folder, run `npm start` in the `dsp-workbench` folder containing
+`package.json`, and open the loopback address printed in the terminal. No
+`npm install` is needed. Record the first runtime download time separately.
 
-1. **예시 파일로 시작 → 비교 검사 시작**을 누릅니다.
-2. **구간 검토 필요**, **2.0–2.1초의 100 ms 누락 후보**를 확인합니다. 예제에서 이 표시는 실패가 아닙니다.
-3. 원본과 처리본의 **구간 듣기**를 각각 실행합니다.
-4. JSON과 HTML을 저장하고, 저장한 HTML이 별도로 열리는지 확인합니다. 보고서에는 진단 정보와 해시가 있으므로 그대로 공개하지 않습니다.
-5. 검사를 다시 시작해 **검사 취소**를 누른 후 재실행합니다. 짧은 예제가 이미 끝났다면 취소 검사는 **미실시**로 남깁니다. 확인하지 않은 동작을 통과로 적지 않습니다.
-6. 터미널에서 Ctrl+C로 로컬 서버를 종료합니다.
+1. Choose **Load example → Run comparison**.
+2. Confirm **Review required** and the **100 ms deletion candidate at 2.0–2.1 seconds**. This is the expected example result, not a failed demonstration.
+3. Choose **Play region** for both the original and processed files.
+4. Save JSON and HTML, then check that the saved HTML opens independently. Reports contain diagnostic information and hashes; do not publish them without reviewing their contents.
+5. Start another analysis, choose **Cancel analysis**, and run it again. If the short example has already finished, record the cancellation check as **not tested**. Do not mark unobserved behavior as passed.
+6. Stop the local server with Ctrl+C in the terminal.
 
-예제 성공은 설치·화면 점검일 뿐 실제 고객 효용이나 탐지 정확도를 증명하지 않습니다. 이 버전의 실제 브라우저·CSP·독립 PC 확인도 사용자가 관측한 항목만 기록합니다.
+A successful example checks setup and interface behavior, not real customer
+usefulness or detection accuracy. Record only what you actually observed in
+your browser, CSP environment, and computer. The English presentation revision
+is `0.1.20-web.3`; the DSP engine remains `0.1.20`.
 
-## 2. 실제 업무 시험 — 파일이 생겼을 때만
+## 2. Check a real workflow — only when you have suitable files
 
-같은 원본에서 만든 처리 전후 PCM16 모노 WAV(각 2–30초), 적용한 처리 설명과 기존 조사 방식이 필요합니다. 별도로 녹음한 두 파일이나 예제 실행을 이 시험으로 대체하지 않습니다.
+You need before/after PCM16 mono WAVs from the same underlying original, each
+2–30 seconds long, a description of the processing applied, and your existing
+investigation method. Two independently recorded files or a synthetic-example
+run do not substitute for this trial.
 
-- 파일·설정이 지원 범위에 맞는지 확인하고, 기존 방식과 Workbench로 문제가 의심되는 구간을 확인합니다.
-- 알려진 정답이 있을 때만 놓친 오류·오경고를 적습니다. 의심 후보를 곧바로 실제 결함으로 세지 않습니다.
-- 조사 시간은 다운로드·설치 시간을 분리해 적고, 단일 사용자·같은 파일의 반복 순서 효과가 있는 관찰임을 표시합니다. 한 건의 관찰로 일반적인 시간 절감을 주장하지 않습니다.
-- **다시 사용 / 조건부 사용 / 보류** 중 하나를 고릅니다. 근거가 없으면 보류할 수 있습니다.
+- Check that the files and settings are within the supported scope, then investigate the suspected regions with your existing method and Workbench.
+- Record missed defects or false warnings only when ground truth is known. A candidate is not automatically a confirmed defect.
+- Record investigation time separately from download and setup time. Note that a single user reviewing the same files can be affected by review order and prior familiarity. One observation does not establish a general time-saving claim.
+- Choose **use again / use under specific conditions / defer**. Deferring is appropriate when evidence is insufficient.
 
-## 3. 최소 기록 — 오디오나 비공개 자료는 제출하지 않음
+## 3. Keep a minimal record — no audio or private material required
 
-아래만 로컬 메모에 적으면 됩니다. 실명·소속·고객명·경로·파일명·파일 해시·원본 보고서는 필요 없습니다.
+The following local note is sufficient. Real names, employer or customer names,
+paths, filenames, file hashes, and original reports are not required.
 
 ```text
-사용 범위: 예제만 / 실제 처리 흐름 / 아직 실행 못 함
-OS / 브라우저 / Node 버전:
-혼자 실행 가능했나: 예 / 아니오
-예상 구간 표시 / 재생 / 저장: 확인 / 실패 / 미실시 (항목별)
-취소 후 재실행: 확인 / 실패 / 미실시
-막힌 단계와 짧은 오류 코드:
-실제 흐름이 있을 때만 — 기존 방식과 걸린 시간, 오경고·놓친 오류·보류:
-다시 사용할 의향과 이유:
+Trial scope: included example only / real processing workflow / not run yet
+OS / browser / Node version:
+Could you run it independently? yes / no
+Expected region displayed / playback / export: observed / failed / not tested (each)
+Cancel and run again: observed / failed / not tested
+Blocked step and short error code:
+Real workflows only — existing method and time, false warnings, missed defects, inconclusive results:
+Would you use it again, and why?
 ```
 
-공유하고 싶다면 개인정보를 제거한 텍스트만 [사용 경험 양식](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml)에 옮기세요. 실행 오류는 [오류 보고 양식](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml)을 사용할 수 있습니다. **이슈와 첨부물은 공개되므로 오디오·비공개 보고서·인증정보는 올리지 마세요.** 비공개 오디오 접수나 지원 계약은 없으며, 문의·오디오 제공은 필수가 아닙니다. 민감한 보안 문제는 [SECURITY.md](../SECURITY.md)를 따르세요.
-
-English: Clone or download the public repository, open a terminal in the folder containing `package.json`, run `npm start`, and open its loopback URL. Load the owned example, run the comparison, confirm the 2.0–2.1 s deletion candidate, listen to both regions, and save JSON/HTML. Try cancel/re-run only if the job is still active; otherwise mark it untested. Stop the server with Ctrl+C. Record setup and usability separately from real-workflow usefulness. Use is limited by the [evaluation licence](../LICENSE.md). Feedback and bug-report links above lead to public GitHub issues: do not post private audio, names, paths, hashes, credentials or unreviewed reports. No private audio intake or support contract is provided. For sensitive security findings, follow [SECURITY.md](../SECURITY.md).
+If you want to share feedback, copy only sanitized text into the
+[workflow-feedback form](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=usage_feedback.yml).
+For execution problems, use the
+[bug-report form](https://github.com/mingyeomjung-alt/dsp-workbench/issues/new?template=bug_report.yml).
+**Issues and attachments are public. Do not post audio, private reports, or
+credentials.** There is no private audio intake or support contract; contacting
+us or supplying audio is not required. For sensitive security findings, follow
+[SECURITY.md](../SECURITY.md).

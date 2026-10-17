@@ -1,6 +1,6 @@
 {
   "name": "dsp-workbench-evaluation",
-  "version": "0.1.20-web.2",
+  "version": "0.1.20-web.3",
   "private": true,
   "description": "Public experimental DSP Workbench evaluation. Local audio comparison; no audio upload server.",
   "license": "SEE LICENSE IN LICENSE.md",

@@ -1,4 +1,4 @@
-name: Bug report / 오류 보고
+name: Bug report
 description: Report a reproducible problem without attaching private audio.
 title: "[Bug] "
 labels: []
@@ -7,39 +7,38 @@ body:
     attributes:
       value: |
         This issue and its attachments are public. Please do not attach customer audio, recordings of people, credentials, private filenames, file hashes, or unreviewed reports. Use a minimal synthetic reproduction if possible. For sensitive security findings, follow SECURITY.md instead. This tool does not provide full audio-quality or release approval.
-        이 이슈와 첨부파일은 공개됩니다. 고객 오디오·사람의 녹음·인증정보·비공개 파일명·파일 해시·확인하지 않은 보고서를 첨부하지 마세요. 가능하면 최소 합성 예제를 사용하고 민감한 보안 문제는 SECURITY.md를 따르세요.
   - type: checkboxes
     id: privacy
     attributes:
-      label: Privacy / 개인정보 확인
+      label: Privacy
       options:
-        - label: I have removed private information, private filenames, hashes, and audio. / 개인정보·비공개 파일명·해시·오디오를 포함하지 않았습니다.
+        - label: I have removed private information, private filenames, hashes, and audio.
           required: true
   - type: textarea
     id: environment
     attributes:
-      label: Environment / 실행 환경
+      label: Environment
       description: Browser and version, OS, package version, pair or suite, selected engine, and actual gain/resampling declarations. Do not include account or device identifiers.
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: Reproduction / 재현 순서
+      label: Reproduction
       description: List the processing steps and clicks. For a safe synthetic example, explain how it can be generated. Include input sample rate, channels, duration, and PCM format.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected and observed / 기대 결과와 실제 결과
+      label: Expected and observed
       description: Include the visible status or error code. A withheld/inconclusive result is not itself proof of a software bug; explain why the supported case should be measurable.
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Sanitized evidence / 개인정보를 제거한 근거 (optional)
+      label: Sanitized evidence (optional)
       description: A short text excerpt or redacted screenshot only. Remove file hashes, private filenames, and identifying diagnostic details before sharing. Do not attach full exported reports.
     validations:
       required: false

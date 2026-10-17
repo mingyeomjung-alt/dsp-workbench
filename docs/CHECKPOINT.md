@@ -7,11 +7,11 @@
 > The frozen archive, runtime version and hashes remain unchanged. See the
 > [current distribution status](../DISTRIBUTION.md) and [public quick start](../README.md).
 
-## Decision / 보존 상태
+## Decision and preservation status
 
 The owner requested saving the current project to the existing **private** GitHub repository because it remains too experimental for customer meetings. Customer interviews, outreach, invitations and external trials are **on hold at the owner's request**. This does not claim the product is complete or commercially validated, and does not authorize publication or a new licence. No further feature work is part of this checkpoint.
 
-현재 상태를 보존하고 고객 인터뷰·접촉·외부 시험을 보류합니다. 실패로 폐기하거나 상용화가 완료된 것으로 처리하지 않습니다. 저장소를 읽기 전용으로 잠그지는 않았으므로 나중에 이어서 개발할 수 있습니다.
+The checkpoint preserves the project while customer interviews, outreach, and external trials are deferred. It does not discard the project as a failure or declare commercialization complete. The repository was not made read-only, so development can resume later.
 
 ## What is saved
 
@@ -30,6 +30,11 @@ This ZIP is an immutable SDK source snapshot, not a newly trained model, new bui
 ```text
 3f6dd9a01b68591bf2dd6a9851091b0e124661a2d509739a3f68d679eceab5d7
 ```
+
+The later English presentation revision, browser adapter `0.1.20-web.3`, does not
+rewrite this archive or wheel. The archive retains its original historical
+documentation and test fixtures, including earlier-language material; it is not
+the active English browser interface.
 
 ## What is implemented, and what remains unproved
 

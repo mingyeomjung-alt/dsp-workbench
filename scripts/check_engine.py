@@ -12,10 +12,12 @@ import hashlib
 import importlib.util
 import json
 import platform
+import re
 import shutil
 import sys
 import tempfile
 import time
+import wave
 from pathlib import Path, PurePosixPath
 from zipfile import ZipFile
 
@@ -72,9 +74,9 @@ def main() -> int:
     from audio_regression.audio import AudioInputError
     from audio_regression.check_policy import check_result
     from audio_regression.regression_suite import run_regression_suite
-    from audio_regression.regression_suite_contract import validate_suite_result
-    from audio_regression.regression_suite_reporting import render_suite_html
-    from audio_regression.reporting import render_html
+    from audio_regression.regression_suite_contract import (
+        canonical_manifest_sha256, validate_suite_result,
+    )
 
     check(audio_regression.__version__ == "0.1.20", "Wrong engine version")
     check(str(WHEEL) in audio_regression.__file__, "Engine was not imported from bundled ZIP")
@@ -138,6 +140,7 @@ def main() -> int:
         spec.loader.exec_module(bridge)
         bridge.WORK_ROOT = temporary / "web-jobs"
         bridge.WORK_ROOT.mkdir()
+        reports = {}
         for index, mode, roles, expected in [
                 (1, "pair", ("source", "candidate"), direct_pair),
                 (2, "suite", ("source", "baseline", "candidate"), direct_suite)]:
@@ -155,6 +158,64 @@ def main() -> int:
             check(outcome["ok"] is True, "Browser adapter rejected a supported request")
             check(outcome["payload"]["result"] == expected, "Browser adapter and frozen engine differ")
             check(not job.exists(), "Browser adapter retained temporary audio")
+            reports[mode] = outcome["payload"]["report_html"]
+
+        pair_snapshot = json.dumps(direct_pair, sort_keys=True)
+        suite_snapshot = json.dumps(direct_suite, sort_keys=True)
+        pair_html = bridge.render_english_pair_html(direct_pair)
+        suite_html = bridge.render_english_suite_html(direct_suite)
+        check(pair_html == reports["pair"] and suite_html == reports["suite"],
+              "Adapter did not use the English presentation boundary")
+        check(json.dumps(direct_pair, sort_keys=True) == pair_snapshot
+              and json.dumps(direct_suite, sort_keys=True) == suite_snapshot,
+              "Report presentation modified numerical results or decision codes")
+        for report in (pair_html, suite_html):
+            check('<html lang="en">' in report, "Browser report does not declare English")
+            check(re.search(r"[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]", report) is None,
+                  "English demonstration report contains untranslated Korean UI")
+            check("Interpretation limits" in report and "not calibrated probabilities" in report,
+                  "English report omitted diagnostic interpretation limits")
+        check("Temporal regression analysis" in pair_html and "Deletion candidate" in pair_html,
+              "English PAIR headings are missing")
+        check('data-start-ms="2000.000"' in pair_html and 'data-end-ms="2100.000"' in pair_html
+              and 'data-boundary-ms="2000.000"' in pair_html,
+              "English report changed known event positions")
+        check("Event diagnostic evidence" in pair_html and "Offset after event (ms)" in pair_html
+              and "-100.0" in pair_html, "English report omitted event evidence")
+        check("Saved WAV regression suite" in suite_html and "Candidate changes" in suite_html
+              and "Baseline output" in suite_html and "Candidate output" in suite_html,
+              "English SUITE headings or embedded details are missing")
+
+        # Localize product wording, not a visitor's own version labels.
+        labelled_suite = json.loads(suite_snapshot)
+        visitor_label = "\ud55c\uad6d\uc5b4 <visitor & label>"
+        labelled_suite["manifest"]["candidate_version"] = visitor_label
+        visitor_path = "/".join(("C:", "Users", "private", "local-version"))
+        labelled_suite["manifest"]["baseline_version"] = visitor_path
+        labelled_suite["manifest_sha256"] = canonical_manifest_sha256(labelled_suite["manifest"])
+        labelled_html = bridge.render_english_suite_html(labelled_suite)
+        check("\ud55c\uad6d\uc5b4 &lt;visitor &amp; label&gt;" in labelled_html,
+              "Visitor text was translated, stripped, or emitted as markup")
+        check(visitor_path not in labelled_html and "[local path omitted]" in labelled_html,
+              "English report exposed a visitor-supplied local path")
+
+        silence = temporary / "silence.wav"
+        with wave.open(str(silence), "wb") as stream:
+            stream.setnchannels(1)
+            stream.setsampwidth(2)
+            stream.setframerate(8000)
+            stream.writeframes(b"\0\0" * 16000)
+        withheld = analyze_pair(source, silence, engine="v11", profile="basic")
+        check(withheld["status"] == "withheld", "Silent fixture must remain withheld")
+        withheld_snapshot = json.dumps(withheld, sort_keys=True)
+        withheld_html = bridge.render_english_pair_html(withheld)
+        check("Withholding or error reason" in withheld_html
+              and withheld["reason_code"] in withheld_html
+              and re.search(r"[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]", withheld_html) is None,
+              "Withheld report is not English or lost the unchanged final reason")
+        check(json.dumps(withheld, sort_keys=True) == withheld_snapshot
+              and check_result(withheld)["gate_state"] == "blocked",
+              "English presentation changed a withheld decision")
 
         invalid_job = bridge.WORK_ROOT / "job-3"
         invalid_folder = invalid_job / "inputs/001"
@@ -169,7 +230,6 @@ def main() -> int:
               "Malformed WAV must produce a failure envelope, never a passing result")
         check(not invalid_job.exists(), "Malformed WAV job was not cleaned up")
 
-    pair_html, suite_html = render_html(direct_pair), render_suite_html(direct_suite)
     for result in (identity, direct_pair, direct_suite, *([invalid] if invalid is not None else [])):
         check(result["complete_audio_approval"] is False, "Whole-audio approval must remain false")
         check(result["commercial_performance_validated"] is False,
@@ -177,6 +237,8 @@ def main() -> int:
     for html in (pair_html, suite_html):
         check("Content-Security-Policy" in html and "default-src 'none'" in html,
               "Static report lacks restrictive CSP")
+        check("style-src 'sha256-" in html and "'unsafe-inline'" not in html,
+              "Static report must allow only the fixed stylesheet by hash")
         check("<script" not in html.lower(), "Static report contains executable JavaScript")
         check("<img src=x onerror=alert(1)>" not in html, "Unsafe label was emitted as HTML")
     check("&lt;img src=x onerror=alert(1)&gt;" in suite_html, "Report label escaping was not exercised")
@@ -186,6 +248,7 @@ def main() -> int:
                 "checks": count, "engine": audio_regression.__version__, "python": platform.python_version(),
                 "numpy": numpy.__version__, "scipy": scipy.__version__,
                 "pair_gate": check_result(direct_pair)["gate_state"], "suite_exit_code": 1,
+                "browser_report_language": "en", "visitor_labels_preserved": True,
                 "complete_audio_approval": False, "commercial_performance_validated": False,
                 "elapsed_seconds": round(time.perf_counter() - started, 3)}
     if args.output_dir is not None:

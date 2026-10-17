@@ -84,12 +84,12 @@ async function fetchAsset(url, maximum) {
 async function initialize() {
   if (initialization) return initialization;
   initialization = (async () => {
-    progress("브라우저 분석 엔진을 준비하고 있습니다. 처음에는 다운로드가 필요합니다.");
+    progress("Preparing the browser analysis engine. The first run requires a download.");
     if (!self.crypto?.subtle) reject("secure_context_required");
     importScripts(`${PYODIDE_INDEX}pyodide.js`);
     pyodide = await loadPyodide({ indexURL: PYODIDE_INDEX });
     if (pyodide.version !== PYODIDE_VERSION) reject("browser_runtime_version_mismatch");
-    progress("수치 계산 모듈을 불러오고 있습니다. 오디오는 전송되지 않습니다.");
+    progress("Loading numerical modules. Your audio is not uploaded.");
     await pyodide.loadPackage(["numpy", "scipy"]);
     const wheel = await fetchAsset(ENGINE_WHEEL, 2 * 1024 * 1024);
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", wheel)),
@@ -139,7 +139,7 @@ async function run(message) {
         pyodide.FS.writeFile(`${folder}/${role}.wav`, new Uint8Array(message.cases[index][role]));
       }
     }
-    progress(spec.mode === "suite" ? "기준 버전과 새 버전의 결과를 비교하고 있습니다." : "원본과 처리본의 시간 대응을 분석하고 있습니다.");
+    progress(spec.mode === "suite" ? "Comparing baseline and candidate outputs." : "Analyzing time correspondence between the source and processed output.");
     pyodide.globals.set("_web_request_json", JSON.stringify(spec));
     pyodide.globals.set("_web_input_root", root);
     const outcome = JSON.parse(pyodide.runPython("dispatch_web_request(_web_request_json, _web_input_root)"));
@@ -157,7 +157,7 @@ async function run(message) {
 self.onmessage = async ({ data }) => {
   const id = data?.id ?? null;
   if (active) {
-    self.postMessage({ type: "error", id, code: "web_worker_busy", message: "진행 중인 분석을 마친 뒤 다시 시도해 주세요." });
+    self.postMessage({ type: "error", id, code: "web_worker_busy", message: "Wait for the current analysis to finish, then try again." });
     return;
   }
   active = true;
@@ -171,7 +171,7 @@ self.onmessage = async ({ data }) => {
     const code = typeof error?.code === "string" && /^[a-z][a-z0-9_]{0,127}$/.test(error.code)
       ? error.code : "browser_analysis_failed";
     self.postMessage({ type: "error", id, code,
-      message: "분석을 완료하지 못했습니다. 입력 형식과 설정을 확인하거나 엔진을 다시 준비해 주세요." });
+      message: "Analysis could not be completed. Check the input format and settings, or reload the engine." });
     // Diagnostics contain no audio, visitor labels, paths, or Python traceback.
   } finally { active = false; }
 };

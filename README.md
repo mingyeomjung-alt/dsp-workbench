@@ -6,14 +6,23 @@
 
 Compare an original WAV with its processed output, inspect candidate regions, and listen at the corresponding positions. For a code change, compare the old and new outputs against the same original in a small regression suite.
 
-[한국어 안내](README.ko.md)
+The current interface and documentation are in English. Browser adapter
+**0.1.20-web.3** changes presentation only; the pinned DSP engine remains
+**0.1.20**. The owned example has been checked in the actual desktop browser;
+this is a bounded functionality check, not proof of detection accuracy or
+compatibility with every browser. See [verification scope](docs/VERIFICATION.md).
 
 <details>
-<summary>See the running example: a 100 ms missing interval</summary>
+<summary>English interface: the included 100 ms deletion example</summary>
 
-![DSP Workbench comparison screen](assets/workbench.png)
+![DSP Workbench showing the English example result](assets/workbench-en.jpg)
 
 </details>
+
+The frozen SDK source archive retains its original historical documentation and
+test fixtures, including earlier-language material. The active browser interface
+and current usage instructions are English; the immutable source snapshot and
+engine wheel have not been rewritten for this presentation change.
 
 ## What it does
 
@@ -41,13 +50,13 @@ Alternatively, choose **Code → Download ZIP** on GitHub, extract it into a new
 
 Open the loopback address printed in the terminal. Do not double-click `web/index.html`: browser runtime loading requires HTTP.
 
-1. Choose **예시 파일로 시작** (start with example files).
-2. Choose **비교 검사 시작** (run comparison).
+1. Choose **Load example**.
+2. Choose **Run comparison**.
 3. Inspect and play the candidate, then save JSON or HTML.
 
-The owned synthetic example contains a **100 ms deletion at 2.0–2.1 seconds** and selects the appropriate `v11` mode. A **구간 검토 필요** (review required) result is the expected demonstration, not a failed demo. This synthetic check does not establish real-world detection accuracy. The normal default remains `v1`; advanced modes apply only to their stated processing assumptions.
+The owned synthetic example contains a **100 ms deletion at 2.0–2.1 seconds** and selects the appropriate `v11` mode. A **Review required** result is the expected demonstration, not a failed demo. This synthetic check does not establish real-world detection accuracy. The normal default remains `v1`; advanced modes apply only to their stated processing assumptions.
 
-To check old versus new output, choose **회귀 검사**, add source / baseline / candidate WAVs, and name the two versions. Version labels are descriptive: they do not authenticate a build or approve the baseline.
+To check old versus new output, choose **Regression suite**, add source / baseline / candidate WAVs, and name the two versions. Version labels are descriptive: they do not authenticate a build or approve the baseline.
 
 Use the [first-trial checklist](docs/FIRST_TRIAL.md) to record setup, playback and exports on a new computer. If you have no real processing files yet, stop after the owned example; it is not a real-workflow usefulness trial.
 
@@ -63,9 +72,9 @@ Use the [first-trial checklist](docs/FIRST_TRIAL.md) to record setup, playback a
 
 Use files from **the same underlying original**. Independently recorded takes, MP3/M4A, multichannel audio, and long-form recordings are outside this interface's supported input scope. Files are not silently converted. Declare only the gain or resampling that actually happened; advanced modes have narrower assumptions shown in the interface.
 
-- **시간적 후보 없음**: no temporal candidate observed within the supported check; not whole-audio approval.
-- **구간 검토 필요**: listen and verify whether the candidate was intentional or a defect.
-- **판단 보류 / 버전 간 비교 불가**: evidence is insufficient; this is not a pass.
+- **No temporal candidates**: no temporal candidate observed within the supported check; not whole-audio approval.
+- **Review required**: listen and verify whether the candidate was intentional or a defect.
+- **Inconclusive / Cannot compare versions**: evidence is insufficient; this is not a pass.
 - Regression **new / persistent / not observed now** describes the relationship between observations. “Not observed now” is not proof that an earlier defect was fixed.
 
 ## Privacy and runtime

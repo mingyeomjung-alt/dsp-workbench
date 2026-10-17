@@ -10,7 +10,14 @@ commercially validated release**. Third-party components retain their own terms.
 This decision supersedes the earlier owner-private storage restriction for this
 repository. The [checkpoint notes](docs/CHECKPOINT.md) retain the historical
 private-save decision and frozen source archive hashes. `bundle-manifest.json`
-describes the earlier runtime-payload preparation, not current visibility.
+describes the current public experimental-evaluation package, English interface,
+and browser adapter `0.1.20-web.3`; the DSP engine remains `0.1.20`.
+
+Current instructions, feedback forms, and the active interface are in English.
+The immutable SDK source ZIP retains its original historical documentation and
+test fixtures, including earlier-language material. It is not the active browser
+interface, and translating the presentation does not rewrite that source snapshot
+or the engine wheel.
 
 ## Publication boundary
 

@@ -1,14 +1,16 @@
 {
   "schema_version": 1,
   "product": "DSP Workbench",
-  "distribution_status": "local_preparation_not_published",
+  "distribution_status": "public_experimental_evaluation",
+  "browser_adapter_version": "0.1.20-web.3",
+  "interface_language": "en",
   "engine_version": "0.1.20",
   "engine_wheel_sha256": "3f6dd9a01b68591bf2dd6a9851091b0e124661a2d509739a3f68d679eceab5d7",
   "files": [
     {
       "path": "web/index.html",
-      "bytes": 12379,
-      "sha256": "0a04cb3efb200905672a2cf56253bccabec1a11a2fcee3f7b9346991361df551"
+      "bytes": 11896,
+      "sha256": "e3b244c521467e06c7e2b7f01c163f21ed06423dfec9cffd5705e01f4d41e46d"
     },
     {
       "path": "web/app.css",
@@ -17,18 +19,18 @@
     },
     {
       "path": "web/app.js",
-      "bytes": 38977,
-      "sha256": "a73aae9a3ceb939f9f961ed39df1c82e2e1886e138d3200be1a374a51e89c1f3"
+      "bytes": 38142,
+      "sha256": "626e144346ef0b3b9fd384797cc09ea4aaa79365856d9b724013caa698af8c01"
     },
     {
       "path": "web/dsp-worker.js",
-      "bytes": 8779,
-      "sha256": "7319debdb9ff6f3420526ee16693011bb47ae35487e453cb1050a787946cd744"
+      "bytes": 8657,
+      "sha256": "a094934e9c9fde7ecdef4a17452845f81fed70e484e1c277425cff46374e55f3"
     },
     {
       "path": "web/bridge.py",
-      "bytes": 7969,
-      "sha256": "fd8c204501382aa0a0d2fbfa8a77afdf950c2bb9aabb9fb49f04b45ec45dfc46"
+      "bytes": 26122,
+      "sha256": "f55c7251d83e7f4bc455eb91113be47ab2717df7d87c1a49025aba03153a0aac"
     },
     {
       "path": "web/engine/audio_regression_engine-0.1.20-py3-none-any.whl",
@@ -51,9 +53,9 @@
       "sha256": "e40bf02b7a183bac2caecf7ab295faf33f92030e9f7121e4394e8cf0bb98b5d4"
     },
     {
-      "path": "assets/workbench.png",
-      "bytes": 104845,
-      "sha256": "6bcac62db445afecab6d5eabc942d525c4506a193aae1f78fceeb345a5be56dd"
+      "path": "assets/workbench-en.jpg",
+      "bytes": 111965,
+      "sha256": "0d093729ca67bbc95a65df6fdfc7631314eafb8b273ff7b6a274a7339e7cbeb5"
     }
   ],
   "audio": "three_owned_synthetic_examples_only",

@@ -32,7 +32,7 @@ test("web payload is a strict independent allowlist without hosting credentials"
     assert.ok(/^(?:README(?:\.[A-Za-z-]+)?\.md|DISTRIBUTION\.md|THIRD_PARTY_NOTICES\.md|SECURITY\.md|CONTRIBUTING\.md|PRIVACY\.md|LICENSE(?:\.md|\.txt)?|package\.json|bundle-manifest\.json|\.gitignore)$/.test(name)
       || /^\.github\/(?:ISSUE_TEMPLATE\/[^/]+\.(?:md|ya?ml)|workflows\/check\.yml|PULL_REQUEST_TEMPLATE\.md)$/.test(name)
       || /^docs\/[^/]+\.md$/.test(name)
-      || name === "assets/workbench.png"
+      || name === "assets/workbench-en.jpg"
       || name === "archives/dsp-engine-source-0.1.20.zip"
       || /^(?:scripts\/(?:check_engine\.py|serve\.mjs)|tests\/(?:bundle|server|frontend_lifecycle|wav_contract)\.test\.mjs)$/.test(name)
       || webFiles.some((value) => name === "web/" + value), `Unexpected distribution file: ${name}`);
@@ -42,11 +42,13 @@ test("web payload is a strict independent allowlist without hosting credentials"
 test("payload inventory binds every shipped runtime file and example screenshot", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, "bundle-manifest.json"), "utf8"));
   assert.equal(manifest.schema_version, 1);
-  assert.equal(manifest.distribution_status, "local_preparation_not_published");
+  assert.equal(manifest.distribution_status, "public_experimental_evaluation");
+  assert.equal(manifest.browser_adapter_version, "0.1.20-web.3");
+  assert.equal(manifest.interface_language, "en");
   assert.equal(manifest.engine_version, "0.1.20");
   const names = manifest.files.map((entry) => entry.path);
   assert.equal(new Set(names).size, names.length);
-  assert.deepEqual(names.slice().sort(), [...webFiles.map((name) => "web/" + name), "assets/workbench.png"].sort());
+  assert.deepEqual(names.slice().sort(), [...webFiles.map((name) => "web/" + name), "assets/workbench-en.jpg"].sort());
   for (const entry of manifest.files) {
     const bytes = fs.readFileSync(path.join(root, entry.path));
     assert.equal(bytes.length, entry.bytes, entry.path);
@@ -87,7 +89,7 @@ test("text assets expose neither workstation paths nor the existing private Site
   for (const name of walk(root).filter((value) => /\.(?:html|js|mjs|css|py|json|md|ya?ml|txt)$/i.test(value))) {
     if (name === "tests/bundle.test.mjs") continue; // This test contains forbidden test patterns.
     const value = fs.readFileSync(path.join(root, name), "utf8");
-    assert.doesNotMatch(value, /[A-Z]:[\\/](?:Users|Program Files)|OneDrive|카카오톡 받은 파일|통화기록\.m4a|녹음본나의\.m4a/i, name);
+    assert.doesNotMatch(value, /[A-Z]:[\\/](?:Users|Program Files)|OneDrive|\uce74\uce74\uc624\ud1a1 \ubc1b\uc740 \ud30c\uc77c|\ud1b5\ud654\uae30\ub85d\.m4a|\ub179\uc74c\ubcf8\ub098\uc758\.m4a/i, name);
     assert.doesNotMatch(value, /[a-z0-9-]+\.chatgpt\.site|appgprj_[a-z0-9]+|poetic-civet/i, name);
     assert.doesNotMatch(value, /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, name);
   }
@@ -135,7 +137,7 @@ test("public evaluation entry points retain narrow rights and privacy-safe feedb
   const packageInfo = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
   assert.equal(packageInfo.private, true); // npm publication guard, not GitHub visibility.
   assert.equal(packageInfo.license, "SEE LICENSE IN LICENSE.md");
-  for (const name of ["README.md", "README.ko.md"]) {
+  for (const name of ["README.md"]) {
     const value = fs.readFileSync(path.join(root, name), "utf8");
     assert.match(value, /git clone https:\/\/github\.com\/mingyeomjung-alt\/dsp-workbench\.git/);
     assert.match(value, /\[.*?\]\(LICENSE\.md\)/);
@@ -153,6 +155,18 @@ test("public evaluation entry points retain narrow rights and privacy-safe feedb
   const security = fs.readFileSync(path.join(root, "SECURITY.md"), "utf8");
   assert.match(security, /Do not put vulnerabilities/);
   assert.match(security, /without technical exploit details or private information/);
+});
+
+test("current documentation, application, and issue forms use English presentation", () => {
+  const currentText = walk(root).filter((name) => /\.(?:md|html|js|mjs|css|py|json|ya?ml)$/.test(name));
+  for (const name of currentText) {
+    const value = fs.readFileSync(path.join(root, name), "utf8");
+    assert.doesNotMatch(value, /[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]/u, name);
+  }
+  assert.match(read("index.html"), /<html lang="en">/);
+  assert.match(read("app.js"), /Run comparison/);
+  assert.match(read("app.js"), /Review required/);
+  assert.match(read("index.html"), /Load example/);
 });
 
 test("page CSP blocks forms, objects, base overrides, and unsandboxed reports", () => {

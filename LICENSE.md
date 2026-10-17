@@ -36,11 +36,3 @@ law. The copyright holder is not liable for claims or damages arising from its
 use to the extent permitted by law. There is no support, uptime, compatibility,
 security, detection-accuracy or commercial-performance commitment. Do not use
 the output as automatic quality, security or release approval.
-
-## 한국어 요약
-
-개인·팀은 이 시제품의 다운로드·로컬 실행·코드 검토·로컬 수정과 피드백을
-위한 평가를 무료로 할 수 있습니다. 상업적 이용·실운영 연동·타인 대상 서비스
-제공·판매·재배포에는 별도 서면 허락이 필요합니다. MIT 등 오픈소스 허가가
-아니며, 제3자 라이선스와 GitHub 약관상 열람·포크 권리는 별도로 유지됩니다.
-실험적 프로그램으로 정확도·보안·지원·상용 품질을 보증하지 않습니다.
