@@ -24,3 +24,4 @@ results/
 .sites-local/
 *.tar.gz
 *.zip
+!archives/dsp-engine-source-0.1.20.zip

@@ -3,6 +3,14 @@
 The owner has authorized uploading only this reviewed directory to an
 owner-private GitHub repository. This is not approval for a public release,
 GitHub Pages, invitations, external distribution or an open-source licence.
+
+On 2026-10-17 the owner requested preserving the experimental project rather
+than proceeding with customer meetings. The repository now also includes the
+reviewed frozen DSP engine source/test archive described in
+[the checkpoint notes](docs/CHECKPOINT.md). Customer outreach and external trials
+are on hold. No repository invitation, new licence, public release or sale is
+authorized by this checkpoint. The repository remains editable for later work;
+it has not been made read-only using GitHub's archive setting.
 No open-source license or permission to redistribute proprietary project code is
 granted by preparing this folder. Third-party components retain their own terms.
 

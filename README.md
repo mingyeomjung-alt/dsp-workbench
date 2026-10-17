@@ -1,5 +1,7 @@
 # DSP Workbench
 
+**Experimental checkpoint — 2026-10-17.** Saved in an owner-private repository for later development. Customer interviews, outreach and external trials are on hold at the owner's request; this is not a commercial release. The [checkpoint and recovery notes](docs/CHECKPOINT.md) describe the current state and include a reviewed frozen engine source/test archive.
+
 **Find where audio content may have been cut or repeated after processing.**
 
 Compare an original WAV with its processed output, inspect candidate regions, and listen at the corresponding positions. For a code change, compare the old and new outputs against the same original in a small regression suite.

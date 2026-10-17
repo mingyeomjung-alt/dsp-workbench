@@ -33,6 +33,7 @@ test("web payload is a strict independent allowlist without hosting credentials"
       || /^\.github\/(?:ISSUE_TEMPLATE\/[^/]+\.(?:md|ya?ml)|workflows\/check\.yml|PULL_REQUEST_TEMPLATE\.md)$/.test(name)
       || /^docs\/[^/]+\.md$/.test(name)
       || name === "assets/workbench.png"
+      || name === "archives/dsp-engine-source-0.1.20.zip"
       || /^(?:scripts\/(?:check_engine\.py|serve\.mjs)|tests\/(?:bundle|server|frontend_lifecycle|wav_contract)\.test\.mjs)$/.test(name)
       || webFiles.some((value) => name === "web/" + value), `Unexpected distribution file: ${name}`);
   }
@@ -51,6 +52,13 @@ test("payload inventory binds every shipped runtime file and example screenshot"
     assert.equal(bytes.length, entry.bytes, entry.path);
     assert.equal(createHash("sha256").update(bytes).digest("hex"), entry.sha256, entry.path);
   }
+});
+
+test("experimental checkpoint preserves the reviewed frozen source archive", () => {
+  const bytes = fs.readFileSync(path.join(root, "archives/dsp-engine-source-0.1.20.zip"));
+  assert.equal(bytes.length, 948970);
+  assert.equal(createHash("sha256").update(bytes).digest("hex"),
+    "f4c26f63f93e8c2c7596e2bc92c0a0144a86d5bdccaa6e5823bcc30c4bdfe4a2");
 });
 
 test("repository automation only runs explicit checks and cannot publish a Site or package", () => {
