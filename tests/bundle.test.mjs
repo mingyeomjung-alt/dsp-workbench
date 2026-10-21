@@ -108,6 +108,10 @@ test("GitHub-project subpaths resolve the same local worker, assets, and demos",
     }
     assert.ok(url.startsWith("./"), `Page URL must be project-relative: ${url}`);
     assert.equal(new URL(url, base).pathname.startsWith("/owner-project/web/"), true);
+    if (/\/app\.(?:js|css)$/.test(new URL(url, base).pathname)) {
+      const version = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).version;
+      assert.equal(new URL(url, base).searchParams.get("v"), version, "Browser assets must use the adapter revision as a cache key");
+    }
   }
   assert.match(app, /new Worker\("\.\/dsp-worker\.js"/);
   assert.match(app, /fetch\(`\.\/demo\/\$\{role\}\.wav`/);

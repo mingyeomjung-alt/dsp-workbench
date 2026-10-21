@@ -130,8 +130,9 @@ test("all runtime entry points resolve under a GitHub project-site prefix", asyn
     assert.ok(targets.has(url.pathname.slice("/dsp-workbench/".length)));
   }
   const html = await readFile(join(ROOT, "web/index.html"), "utf8");
-  assert.match(html, /href="\.\/app\.css"/);
-  assert.match(html, /src="\.\/app\.js"/);
+  const version = JSON.parse(await readFile(join(ROOT, "package.json"), "utf8")).version;
+  assert.ok(html.includes(`href="./app.css?v=${version}"`));
+  assert.ok(html.includes(`src="./app.js?v=${version}"`));
   assert.doesNotMatch(html, /(?:href|src)="\/(?!\/)/);
   const app = await readFile(join(ROOT, "web/app.js"), "utf8");
   const worker = await readFile(join(ROOT, "web/dsp-worker.js"), "utf8");

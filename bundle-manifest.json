@@ -9,8 +9,8 @@
   "files": [
     {
       "path": "web/index.html",
-      "bytes": 14666,
-      "sha256": "397fa137a56d34772d0ef3a2e072153d0566dafc00a7248cb546654b3a94a813"
+      "bytes": 14696,
+      "sha256": "c344e6b6176d389c5b32ba36977a852e090b6d7a825b81f3bcee270985ee1f82"
     },
     {
       "path": "web/app.css",
