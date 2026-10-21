@@ -1,10 +1,45 @@
 # Verification scope
 
-This is a public experimental prototype under a [limited evaluation licence](../LICENSE.md), not a commercially validated product or a general open-source release. The browser adapter is `0.1.20-web.3`; the frozen DSP engine remains **0.1.20** with its existing default `v1`, numerical rules and thresholds. This revision translates the current interface, reports, instructions, and issue forms into English; it does not change the detector or establish new performance evidence. The README screenshot is an actual desktop-browser run of the included English example.
+This is a public experimental prototype under a [limited evaluation licence](../LICENSE.md), not a commercially validated product or a general open-source release. The browser adapter is `0.1.20-web.4`; the frozen DSP engine remains **0.1.20** with its existing default `v1`, numerical rules and thresholds. The new revision adds a no-install entry route and a direct example action, not a new detector or performance claim. The README screenshot is an actual desktop-browser run of the earlier English example, not evidence of the newly hosted deployment.
+
+## No-install onboarding revision — 2026-10-21
+
+The owner authorized GitHub Pages publication. **Deployment and hosted browser
+verification are pending.** The planned public entry point is
+[the project Pages URL](https://mingyeomjung-alt.github.io/dsp-workbench/).
+The **Run 100 ms deletion example** action loads the owned source and processed
+pair, selects its declared `v11` mode, and runs the pinned engine;
+it is not a prerecorded or hard-coded result. The existing mode-specific
+**Load example** action and optional loopback preview remain available.
+
+The `0.1.20-web.4` local preview was checked in an actual desktop browser at a
+repository-shaped `/dsp-workbench/` subpath. The direct example action completed
+an engine analysis and displayed **Review required**, one deletion candidate at
+source **2.0-2.1 seconds**, and an output boundary at **2.0 seconds**. It did not
+start playback automatically. This check does not claim a fresh listening,
+download, cancellation or hosted-origin test. The full Node check run reported
+**114 tests: 113 passed, one OS-restricted symlink fixture skipped, zero failed**.
+These tests include controlled frontend lifecycle checks, not full browser
+automation or independent detector-accuracy evidence.
+
+The optional local server applies an HTTP Content-Security-Policy header to
+both the document and Worker script, along with its other local response
+headers. GitHub Pages is a different static host: the shipped HTML meta CSP
+restricts the document but does **not** apply the local server's header policy
+to a dedicated Worker. Do not treat Pages as having the same header-level
+security enforcement. The reviewed Worker code and absence of audio-upload
+and tracking paths remain part of the application design; that is not a claim
+of identical host security headers.
+
+Historical checks below establish only the exact scope and revision stated.
+They do not establish that the new Pages URL resolves, that a new workflow has
+run on GitHub, or that hosted runtime loading, cancellation and exports work.
+Those observations must be recorded after deployment. No customer utility,
+detection accuracy, adoption, offline operation or licence expansion is claimed.
 
 ## English presentation check — 2026-10-17
 
-The current local preview was opened in an actual desktop browser. The included
+The `0.1.20-web.3` local preview was opened in an actual desktop browser. The included
 PAIR example displayed **Review required**, one deletion at **2.0–2.1 seconds**,
 and the corresponding output boundary at **2.0 seconds**. The included SUITE
 example displayed one new candidate, zero persistent candidates, and zero
@@ -13,7 +48,7 @@ English embedded HTML reports were observed and both HTML and JSON downloads
 completed for both modes. Static reports declare `lang="en"` and restrict styles
 with a CSP hash. The screenshot contains only the project-owned synthetic example.
 
-The repository checks passed **98 tests** with one OS-restricted symlink fixture
+For that presentation revision, the repository checks passed **98 tests** with one OS-restricted symlink fixture
 skipped. The native checker passed **284 assertions**, including exact engine/
 adapter result parity, English reports, safe escaping, and unchanged withheld
 outcomes. A text check prevents untranslated Korean product wording in current
@@ -44,6 +79,6 @@ On that machine the maximum-source suite took approximately 4.8 seconds in Node/
 - Removing job files releases references but WebAssembly linear memory may retain its allocated high-water size. Cancelling terminates the Worker; re-running creates another Worker as needed.
 - Developer Node/WebAssembly timings and memory observations are not browser RAM, mobile results, guarantees for all inputs, or a service-level agreement.
 - This revision has not been deployed to the existing private hosted Site. The owned English example's desktop UI, runtime loading and report display/export were checked as described above. Other browsers, mobile limits and an independent customer computer remain unverified.
-- GitHub Actions checks are manual-only and have not been executed on GitHub. A Windows symlink fixture can be skipped when the operating system does not permit its creation; that path is not claimed as tested.
+- Before the 2026-10-21 Pages change, the manual check workflow had not been executed on GitHub. New deployment and hosted-check status must be recorded separately above. A Windows symlink fixture can be skipped when the operating system does not permit its creation; that path is not claimed as tested.
 
 Public repository access and limited experimental use are governed by the [evaluation licence](../LICENSE.md) and [distribution status](../DISTRIBUTION.md), not by passing checks. No check grants commercial-use or redistribution permission, automatic audio approval, or a claim that a real customer saves time. Actual workflow usefulness still requires real use and observation.

@@ -17,7 +17,7 @@ const webFiles = ["app.css", "app.js", "bridge.py", "demo/baseline.wav", "demo/c
 function walk(folder, prefix = "") {
   return fs.readdirSync(folder, {withFileTypes: true}).flatMap((entry) => {
     // A clone/checkout necessarily has Git metadata. It is not shipped web data.
-    if (prefix === "" && entry.name === ".git") return [];
+    if (prefix === "" && [".git", ".demo-dist"].includes(entry.name)) return [];
     const relative = prefix + entry.name;
     assert.equal(fs.lstatSync(path.join(folder, entry.name)).isSymbolicLink(), false, relative);
     return entry.isDirectory() ? walk(path.join(folder, entry.name), relative + "/") : [relative];
@@ -30,11 +30,11 @@ test("web payload is a strict independent allowlist without hosting credentials"
     assert.doesNotMatch(name, /(?:^|\/)(?:\.openai|\.venv|\.third_party|node_modules|__pycache__|\.env(?:\..*)?)\//i);
     assert.doesNotMatch(name, /(?:^|\/)(?:hosting\.json|credentials?[^/]*|id_rsa|\.DS_Store)$/i);
     assert.ok(/^(?:README(?:\.[A-Za-z-]+)?\.md|DISTRIBUTION\.md|THIRD_PARTY_NOTICES\.md|SECURITY\.md|CONTRIBUTING\.md|PRIVACY\.md|LICENSE(?:\.md|\.txt)?|package\.json|bundle-manifest\.json|\.gitignore)$/.test(name)
-      || /^\.github\/(?:ISSUE_TEMPLATE\/[^/]+\.(?:md|ya?ml)|workflows\/check\.yml|PULL_REQUEST_TEMPLATE\.md)$/.test(name)
+      || /^\.github\/(?:ISSUE_TEMPLATE\/[^/]+\.(?:md|ya?ml)|workflows\/(?:check|pages)\.yml|PULL_REQUEST_TEMPLATE\.md)$/.test(name)
       || /^docs\/[^/]+\.md$/.test(name)
       || name === "assets/workbench-en.jpg"
       || name === "archives/dsp-engine-source-0.1.20.zip"
-      || /^(?:scripts\/(?:check_engine\.py|serve\.mjs)|tests\/(?:bundle|server|frontend_lifecycle|wav_contract)\.test\.mjs)$/.test(name)
+      || /^(?:scripts\/(?:check_engine\.py|serve\.mjs|build-demo\.mjs)|tests\/(?:bundle|server|frontend_lifecycle|wav_contract|demo_package)\.test\.mjs)$/.test(name)
       || webFiles.some((value) => name === "web/" + value), `Unexpected distribution file: ${name}`);
   }
 });
@@ -43,7 +43,7 @@ test("payload inventory binds every shipped runtime file and example screenshot"
   const manifest = JSON.parse(fs.readFileSync(path.join(root, "bundle-manifest.json"), "utf8"));
   assert.equal(manifest.schema_version, 1);
   assert.equal(manifest.distribution_status, "public_experimental_evaluation");
-  assert.equal(manifest.browser_adapter_version, "0.1.20-web.3");
+  assert.equal(manifest.browser_adapter_version, "0.1.20-web.4");
   assert.equal(manifest.interface_language, "en");
   assert.equal(manifest.engine_version, "0.1.20");
   const names = manifest.files.map((entry) => entry.path);
@@ -63,10 +63,11 @@ test("experimental checkpoint preserves the reviewed frozen source archive", () 
     "f4c26f63f93e8c2c7596e2bc92c0a0144a86d5bdccaa6e5823bcc30c4bdfe4a2");
 });
 
-test("repository automation only runs explicit checks and cannot publish a Site or package", () => {
+test("check workflow stays read-only and local scripts cannot publish", () => {
   const value = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
   assert.equal(value.private, true);
-  assert.deepEqual(Object.keys(value.scripts).sort(), ["start", "test"]);
+  assert.deepEqual(Object.keys(value.scripts).sort(), ["build:demo", "start", "test"]);
+  assert.equal(value.scripts["build:demo"], "node scripts/build-demo.mjs");
   assert.equal(value.dependencies, undefined);
   const workflow = fs.readFileSync(path.join(root, ".github/workflows/check.yml"), "utf8");
   assert.match(workflow, /^\s+workflow_dispatch:\s*$/m);
@@ -100,6 +101,11 @@ test("GitHub-project subpaths resolve the same local worker, assets, and demos",
   const base = new URL("https://example.invalid/owner-project/web/");
   for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
     if (url.startsWith("#")) continue;
+    if (url.startsWith("https://")) {
+      assert.equal(new URL(url.replaceAll("&amp;", "&")).origin, "https://github.com");
+      assert.ok(new URL(url).pathname.startsWith("/mingyeomjung-alt/dsp-workbench"));
+      continue;
+    }
     assert.ok(url.startsWith("./"), `Page URL must be project-relative: ${url}`);
     assert.equal(new URL(url, base).pathname.startsWith("/owner-project/web/"), true);
   }

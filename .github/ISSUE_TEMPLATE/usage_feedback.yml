@@ -1,12 +1,12 @@
 name: Workflow feedback
-description: Explain the processing problem and whether the diagnostic helped.
+description: A sentence or two about trying the demo is enough. No audio or identity needed.
 title: "[Feedback] "
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        This issue and its attachments are public. We are testing usefulness in real audio-processing workflows, not offering automatic quality approval. Please do not post private audio, customer names, confidential code, credentials, private filenames, file hashes, or unreviewed reports. You do not need to identify yourself or your employer.
+        This issue and its attachments are public. A sentence or two about what you tried, where you got stuck, and whether you would use it again is enough. Feedback is voluntary; an example-only attempt is welcome. We are testing usefulness, not offering automatic quality approval. Please do not post private audio, customer names, confidential code, credentials, private filenames, file hashes, or unreviewed reports. You do not need to identify yourself or your employer. This is a public issue, not a private audio-upload form.
   - type: checkboxes
     id: privacy
     attributes:
@@ -14,13 +14,6 @@ body:
       options:
         - label: I have removed private information, private filenames, hashes, and audio.
           required: true
-  - type: textarea
-    id: workflow
-    attributes:
-      label: Workflow and problem
-      description: What processing do you do, and how do you currently find missing or repeated audio? A brief description is enough.
-    validations:
-      required: true
   - type: dropdown
     id: tried
     attributes:
@@ -31,13 +24,30 @@ body:
         - My own supported processing pair
     validations:
       required: true
+  - type: dropdown
+    id: route
+    attributes:
+      label: How did you try it? (optional)
+      options:
+        - GitHub Pages browser demo
+        - Local Node preview
+        - Did not reach the tool
+    validations:
+      required: false
   - type: textarea
     id: value
     attributes:
-      label: What helped or did not
-      description: Did a location, playback, warning, or withheld result help? Did it shorten investigation, miss a known issue, or add unnecessary review? Approximate observations are welcome; no measurements are required.
+      label: What happened?
+      description: Did the example run? What helped, got in the way, or would make you use it again? A short answer is enough. No measurements or attachments are required.
     validations:
       required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow and problem (optional)
+      description: If relevant, what processing do you do, and how do you currently find missing or repeated audio? Do not name your employer or customers.
+    validations:
+      required: false
   - type: textarea
     id: next
     attributes:

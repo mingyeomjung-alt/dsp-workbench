@@ -2,25 +2,25 @@
   "schema_version": 1,
   "product": "DSP Workbench",
   "distribution_status": "public_experimental_evaluation",
-  "browser_adapter_version": "0.1.20-web.3",
+  "browser_adapter_version": "0.1.20-web.4",
   "interface_language": "en",
   "engine_version": "0.1.20",
   "engine_wheel_sha256": "3f6dd9a01b68591bf2dd6a9851091b0e124661a2d509739a3f68d679eceab5d7",
   "files": [
     {
       "path": "web/index.html",
-      "bytes": 11896,
-      "sha256": "e3b244c521467e06c7e2b7f01c163f21ed06423dfec9cffd5705e01f4d41e46d"
+      "bytes": 14666,
+      "sha256": "397fa137a56d34772d0ef3a2e072153d0566dafc00a7248cb546654b3a94a813"
     },
     {
       "path": "web/app.css",
-      "bytes": 23819,
-      "sha256": "5527498fecadc6e45e48a112d917fabc363e3903738c0c5a4cc8b61224743037"
+      "bytes": 25945,
+      "sha256": "c47eed80110450ee46221d83f99a2872552cf80bcd3a608430c04c7d6f3b2d1d"
     },
     {
       "path": "web/app.js",
-      "bytes": 38142,
-      "sha256": "626e144346ef0b3b9fd384797cc09ea4aaa79365856d9b724013caa698af8c01"
+      "bytes": 38778,
+      "sha256": "e196c6ccc143d7dc463c9b92f87175eb12ffafdcae4e209736cdf33acf5817f3"
     },
     {
       "path": "web/dsp-worker.js",

@@ -11,7 +11,7 @@ This decision supersedes the earlier owner-private storage restriction for this
 repository. The [checkpoint notes](docs/CHECKPOINT.md) retain the historical
 private-save decision and frozen source archive hashes. `bundle-manifest.json`
 describes the current public experimental-evaluation package, English interface,
-and browser adapter `0.1.20-web.3`; the DSP engine remains `0.1.20`.
+and browser adapter `0.1.20-web.4`; the DSP engine remains `0.1.20`.
 
 Current instructions, feedback forms, and the active interface are in English.
 The immutable SDK source ZIP retains its original historical documentation and
@@ -20,6 +20,25 @@ interface, and translating the presentation does not rewrite that source snapsho
 or the engine wheel.
 
 ## Publication boundary
+
+### No-install demo authorization — 2026-10-21
+
+The owner authorized a public **GitHub Pages static evaluation demo** at
+[the project Pages URL](https://mingyeomjung-alt.github.io/dsp-workbench/).
+Deployment and hosted verification are pending; authorization is not evidence
+that the URL is live or has passed a browser check. The public demo is intended
+to remove the clone, Node.js and local-terminal requirements for trying the
+included example. The local preview remains available.
+
+This extension does **not** authorize an audio-upload server, an analysis API,
+accounts, tracking, automatic usage/result collection, package publication,
+commercial permission or a support contract. The static host serves reviewed
+application/runtime assets and owned synthetic examples only. Selected audio
+remains in volatile browser memory. GitHub and the runtime CDN receive ordinary
+asset requests under their own terms. The [evaluation licence](LICENSE.md) is
+unchanged, including its restrictions on production use and redistribution.
+
+### Reviewed repository contents
 
 Only this reviewed repository and its reviewed Git history are published. **Never
 upload its parent workspace.** Personal recordings, downloaded datasets/models,
@@ -30,15 +49,17 @@ encrypted or code-hidden. Public copies and GitHub forks may remain available
 even if the repository later becomes private. Restricted evaluation terms are
 not a technical copy-protection mechanism.
 
-No GitHub Pages deployment, new hosted site, package-registry publication, paid
-offer, customer invitation or support contract is part of this decision. The
-existing separately hosted private site is unchanged. The local Node server
+The 2026-10-17 decision did not include hosted deployment; only the static
+GitHub Pages evaluation demo was added by the 2026-10-21 authorization above.
+No other new hosted site, package-registry publication, paid offer, customer
+invitation or support contract is included. The existing separately hosted
+private site is unchanged. The local Node server
 binds to 127.0.0.1, has no account/login layer, and must not be exposed as an
 internet-facing application server. `package.json` keeps `private: true` to
 prevent accidental npm publication; that flag does not control GitHub visibility.
 
-The supplied Actions workflow remains manual-only, read-only and synthetic.
-Passing checks are not field accuracy, customer utility or whole-audio approval.
+The repository check workflow is separate from static Pages publication.
+Passing checks or publishing a demo is not field accuracy, customer utility or whole-audio approval.
 The engine, thresholds, runtime assets and current browser verification limits
 are unchanged by publication.
 

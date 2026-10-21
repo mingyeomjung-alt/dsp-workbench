@@ -34,6 +34,7 @@
   let listenTimer = null;
   let nextCase = 1;
   let loadGeneration = 0;
+  let demoLoading = false;
   const pair = { case_id: "pair-01", files: {}, entries: {} };
   const suite = [];
   const objectUrls = new Set();
@@ -107,6 +108,9 @@
   }
   function updateControls() {
     document.querySelectorAll("input, select, #add-case, #demo-button, #clear-button, .file-picker, .file-clear, .remove-case, .nav-item").forEach((el) => { el.disabled = busy; });
+    $("demo-button").disabled = busy || demoLoading;
+    $("quick-demo-button").disabled = busy || demoLoading;
+    $("quick-demo-button").setAttribute("aria-busy", String(demoLoading || busy));
     const complete = currentCases().length > 0 && currentCases().every((item) => caseRoles().every((role) => item.files[role]));
     const versions = mode === "pair" || ($("baseline-version").value.trim() && $("candidate-version").value.trim());
     $("run-button").disabled = busy || !complete || !versions || !!configError() || totalBytes() > MAX_TOTAL;
@@ -128,8 +132,10 @@
   }
   function invalidateDemo() {
     loadGeneration++;
+    demoLoading = false;
     $("demo-button").lastChild.textContent = "Load example";
     $("demo-button").disabled = busy;
+    $("quick-demo-button").disabled = busy;
   }
   function setFile(item, role, file, fromDemo = false) {
     if (busy) return false;
@@ -547,10 +553,11 @@
     $("result-actions").hidden = false;
     $("result-count").hidden = false;
   }
-  async function demo() {
-    if (busy) return;
+  async function demo(runAfterLoad = false) {
+    if (busy || demoLoading) return;
     const generation = ++loadGeneration;
-    $("demo-button").disabled = true;
+    demoLoading = true;
+    updateControls();
     $("demo-button").lastChild.textContent = "Loading example";
     clearError();
     try {
@@ -571,8 +578,14 @@
       if (mode === "suite") { $("baseline-version").value = "demo-baseline"; $("candidate-version").value = "demo-100ms-delete"; }
       updateConfig();
       $("run-note").textContent = "Synthetic example · A 100 ms deletion at 2 seconds. This does not establish performance in customer environments.";
+      if (runAfterLoad && generation === loadGeneration) await run();
     } catch (err) { if (generation === loadGeneration) showError(err.message, "demo_load_failed"); }
-    finally { if (generation === loadGeneration) { $("demo-button").lastChild.textContent = "Load example"; updateControls(); } }
+    finally { if (generation === loadGeneration) { demoLoading = false; $("demo-button").lastChild.textContent = "Load example"; updateControls(); } }
+  }
+  async function quickDemo() {
+    if (busy || demoLoading) return;
+    setMode("pair");
+    await demo(true);
   }
   function download(kind) {
     if (!resultPayload) return;
@@ -616,7 +629,8 @@
   $("run-button").addEventListener("click", run);
   $("cancel-button").addEventListener("click", cancel);
   $("add-case").addEventListener("click", () => { invalidateDemo(); addCase(); });
-  $("demo-button").addEventListener("click", demo);
+  $("demo-button").addEventListener("click", () => demo());
+  $("quick-demo-button").addEventListener("click", quickDemo);
   $("clear-button").addEventListener("click", clearAll);
   $("download-json").addEventListener("click", () => download("json"));
   $("download-html").addEventListener("click", () => download("html"));
@@ -630,6 +644,7 @@
   window.addEventListener("pagehide", () => {
     runCounter++;
     loadGeneration++;
+    demoLoading = false;
     busy = false;
     stopAudio();
     destroyWorker("page_left");

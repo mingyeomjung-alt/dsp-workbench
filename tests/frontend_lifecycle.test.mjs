@@ -86,6 +86,44 @@ const latestRun = (worker) => worker.sent.filter((item) => item.data.type === "r
 async function success(h, worker = h.workers.at(-1)) { const request = latestRun(worker); assert.ok(request); worker.message({type: "result", id: request.id, payload: payload()}); await flush(); }
 
 test("frontend stays idle without complete inputs", async () => { const h = harness(); assert.equal(h.ids.get("run-button").disabled, true); await h.fixture.run(); assert.equal(h.workers.length, 0); assert.equal(h.timers.size, 0); });
+test("quick example switches from suite and runs actual orchestration without autoplay", async () => {
+  const h = harness(); h.fixture.setMode("suite");
+  const pending = h.ids.get("quick-demo-button").fire("click")[0];
+  assert.equal(h.fetches.length, 2);
+  assert.equal(h.ids.get("quick-demo-button").disabled, true);
+  assert.equal(h.ids.get("demo-button").disabled, true);
+  h.fetches.forEach((request) => request.resolve({ok: true, blob: async () => new Blob([wav])}));
+  await flush();
+  assert.equal(h.workers.length, 1); await h.ready();
+  const request = latestRun(h.workers[0]);
+  assert.equal(request.mode, "pair"); assert.equal(request.configuration.engine, "v11");
+  assert.equal(request.configuration.allow_gain, false); assert.equal(request.configuration.allow_resampling, false);
+  assert.equal(h.fixture.pair.entries.source.audio.playCount, 0);
+  assert.equal(h.fixture.pair.entries.candidate.audio.playCount, 0);
+  await success(h); await pending;
+  assert.equal(h.ids.get("quick-demo-button").disabled, false); assert.ok(h.fixture.state.resultPayload);
+});
+test("quick example double activation makes only one download and stale edits prevent autorun", async () => {
+  const h = harness(); const pending = h.ids.get("quick-demo-button").fire("click")[0];
+  await h.ids.get("quick-demo-button").fire("click")[0]; assert.equal(h.fetches.length, 2);
+  const manual = h.file("manual.wav"); h.fixture.setFile(h.fixture.pair, "source", manual);
+  h.fetches.forEach((request) => request.resolve({ok: true, blob: async () => new Blob([wav])})); await pending;
+  assert.equal(h.workers.length, 0); assert.equal(h.fixture.pair.files.source, manual);
+  assert.equal(h.ids.get("quick-demo-button").disabled, false);
+});
+test("quick example download failure leaves a retryable control and no false result", async () => {
+  const h = harness(); const pending = h.ids.get("quick-demo-button").fire("click")[0];
+  h.fetches.forEach((request) => request.resolve({ok: false})); await pending;
+  assert.equal(h.ids.get("error-code").textContent, "demo_load_failed");
+  assert.equal(h.ids.get("quick-demo-button").disabled, false); assert.equal(h.workers.length, 0);
+  assert.equal(h.fixture.state.resultPayload, null);
+});
+test("loading an example alone does not start analysis or playback", async () => {
+  const h = harness(); const pending = h.ids.get("demo-button").fire("click")[0];
+  h.fetches.forEach((request) => request.resolve({ok: true, blob: async () => new Blob([wav])})); await pending;
+  assert.equal(h.workers.length, 0); assert.equal(h.ids.get("run-button").disabled, false);
+  assert.equal(h.fixture.pair.entries.source.audio.playCount, 0);
+});
 test("Worker constructor failure resets initialization and a second run can succeed", async () => { const h = harness(); h.selectPair(); h.options.constructorError = true; await h.fixture.run(); assert.equal(h.ids.get("error-code").textContent, "worker_start_failed"); assert.equal(h.fixture.state.busy, false); assert.equal(h.fixture.state.worker, null); h.options.constructorError = false; const next = await h.start(); await h.ready(); await success(h); await next.result; assert.ok(h.fixture.state.resultPayload); });
 test("initialization post failure resets timers and permits retry", async () => { const h = harness(); h.selectPair(); h.options.postError = "init"; await h.fixture.run(); assert.equal(h.ids.get("error-code").textContent, "worker_message_failed"); assert.equal(h.workers[0].terminated, true); assert.equal(h.timers.size, 0); h.options.postError = null; const next = await h.start(); await h.ready(); await success(h); await next.result; });
 test("initialization error invalidates old Worker messages and allows another attempt", async () => { const h = harness(); h.selectPair(); const first = await h.start(); first.worker.message({type: "error", code: "runtime_asset_unavailable", message: "fixture failure"}); await first.result; assert.equal(h.ids.get("error-code").textContent, "runtime_asset_unavailable"); assert.equal(first.worker.terminated, true); first.worker.message({type: "ready", runtime: {engine: "stale"}}); assert.equal(h.fixture.state.runtime, null); const next = await h.start(); await h.ready(); await success(h); await next.result; });

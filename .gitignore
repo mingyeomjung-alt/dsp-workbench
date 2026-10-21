@@ -9,6 +9,7 @@ __pycache__/
 .pytest_cache/
 .tmp/
 coverage/
+.demo-dist/
 results/
 *.log
 # Never stage visitor recordings or private report files here.
