@@ -2,7 +2,7 @@
 
 **Public experimental preview.** Find a missing or repeated section without listening to the entire processing output. Start with the included example; no audio of your own is needed. This is an experimental diagnostic, not a commercially validated product.
 
-**[Open the browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/)** — no installation or account required. **Publication is authorized; deployment and hosted verification are pending.** If the link is not available yet, use the [local alternative](#run-locally-optional).
+**[Open the browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/)** — no installation or account required. Choose **Run 100 ms deletion example** to load the included files and run the real engine. Published and checked in a desktop browser on **2026-10-21**. A [local alternative](#run-locally-optional) is also available.
 
 The [evaluation licence](LICENSE.md) permits limited experimental evaluation, not general open-source use. Production use, commercial integration and redistribution require separate written permission. Publishing a demo does not change these terms. See [distribution status](DISTRIBUTION.md).
 
@@ -42,7 +42,7 @@ This is a temporal-integrity diagnostic, **not** a full audio-quality score, spe
 
 Imagine a processing change removes 100 ms from the middle of a recording. The WAV still opens, so a container check passes. Workbench compares the original with the processed file to point you to the suspected cut.
 
-Use a recent desktop browser and internet access for the first runtime download. Open the [browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/) (publication pending), then:
+Use a recent desktop browser and internet access for the first runtime download. Open the [browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/), then:
 
 1. Choose **Run 100 ms deletion example**. This loads the owned pair and runs the real browser-side DSP engine; it does not display a canned result.
 2. Inspect the **2.0–2.1 second deletion candidate**.
@@ -56,7 +56,7 @@ Use the [first-trial checklist](docs/FIRST_TRIAL.md) for playback, exports and s
 
 ## Run locally (optional)
 
-Prefer a loopback preview or need a fallback while publication is pending? With **Node.js 20 or later**, clone the repository and start it. No `npm install` is needed.
+Prefer a loopback preview? With **Node.js 20 or later**, clone the repository and start it. No `npm install` is needed.
 
 ```sh
 git clone https://github.com/mingyeomjung-alt/dsp-workbench.git
@@ -91,7 +91,7 @@ The first analysis downloads **Pyodide 0.29.3**, NumPy, and SciPy from a CDN, pl
 
 **64 MiB is the total input-file budget, not a RAM ceiling.** Numerical work and temporary copies need additional memory. Start with one short case on a desktop, and split heavy batches. Failed initialization can be retried; cancellation terminates the execution Worker and discards the previous job. Initialization has a four-minute watchdog and analysis a ten-minute watchdog. These are stuck-job limits, not latency promises. See [verification scope and limits](docs/VERIFICATION.md).
 
-The GitHub Pages demo serves static application and example files; it is not an audio-upload or analysis server. Publication is authorized and deployment verification is pending. The optional Node server binds to loopback and has **no account login**; do not expose it as an internet-facing production server. Browser execution downloads the engine wheel, so that code is visible to anyone who receives it.
+The GitHub Pages demo serves static application and example files; it is not an audio-upload or analysis server. The hosted example and JSON/HTML downloads were checked in a desktop browser on 2026-10-21. The optional Node server binds to loopback and has **no account login**; do not expose it as an internet-facing production server. Browser execution downloads the engine wheel, so that code is visible to anyone who receives it.
 
 ## Checks
 
@@ -109,7 +109,7 @@ That optional check requires Python 3.12 with compatible NumPy / SciPy installed
 
 ## Current stage and feedback
 
-**Public experimental prototype; real workflow usefulness and commercial detection performance remain unvalidated.** The planned no-install demo and local preview are covered by the same [limited evaluation licence](LICENSE.md). This is not an open-source or commercial release, managed analysis service, support contract, or automatic audio approval.
+**Public experimental prototype; real workflow usefulness and commercial detection performance remain unvalidated.** The no-install demo and local preview are covered by the same [limited evaluation licence](LICENSE.md). This is not an open-source or commercial release, managed analysis service, support contract, or automatic audio approval.
 
 Feedback is optional. One or two sentences are enough, even if setup failed or you tried only the included example: **what did you try, where did you get stuck, and would you use it again?**
 

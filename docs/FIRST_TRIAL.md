@@ -7,7 +7,7 @@ commercial-use, or redistribution permission. Read the
 
 ## 1. Open the example — no installation or your own files needed
 
-Open the [browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/) in a recent desktop browser. No account, Node.js or installation is needed for this route. **Publication is authorized; deployment and hosted verification are pending.** If unavailable, follow the [local alternative](../README.md#run-locally-optional). Internet access is needed for the first Python runtime download; this is not an offline bundle. Record download time separately from analysis time.
+Open the [browser demo](https://mingyeomjung-alt.github.io/dsp-workbench/) in a recent desktop browser. No account, Node.js or installation is needed for this route. The hosted example was checked on 2026-10-21; this is not a guarantee of every browser or network. For local execution, follow the [local alternative](../README.md#run-locally-optional). Internet access is needed for the first Python runtime download; this is not an offline bundle. Record download time separately from analysis time.
 
 1. Choose **Run 100 ms deletion example**. It loads the owned original/processed pair and runs the actual browser-side engine. Alternatively, **Load example → Run comparison** loads the example for the selected mode before running it.
 2. Confirm **Review required** and the **100 ms deletion candidate at 2.0–2.1 seconds**. This is the expected example result, not a failed demonstration.

@@ -25,8 +25,9 @@ or the engine wheel.
 
 The owner authorized a public **GitHub Pages static evaluation demo** at
 [the project Pages URL](https://mingyeomjung-alt.github.io/dsp-workbench/).
-Deployment and hosted verification are pending; authorization is not evidence
-that the URL is live or has passed a browser check. The public demo is intended
+The first manual deployment succeeded on 2026-10-21, and the hosted owned
+example and JSON/HTML downloads were checked in a desktop browser. See
+[verification scope](docs/VERIFICATION.md) for evidence and limits. The public demo is intended
 to remove the clone, Node.js and local-terminal requirements for trying the
 included example. The local preview remains available.
 

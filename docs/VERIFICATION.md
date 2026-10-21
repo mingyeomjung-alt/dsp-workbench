@@ -4,8 +4,8 @@ This is a public experimental prototype under a [limited evaluation licence](../
 
 ## No-install onboarding revision — 2026-10-21
 
-The owner authorized GitHub Pages publication. **Deployment and hosted browser
-verification are pending.** The planned public entry point is
+The owner authorized GitHub Pages publication. **The first deployment and hosted
+example check completed on 2026-10-21.** The public entry point is
 [the project Pages URL](https://mingyeomjung-alt.github.io/dsp-workbench/).
 The **Run 100 ms deletion example** action loads the owned source and processed
 pair, selects its declared `v11` mode, and runs the pinned engine;
@@ -31,11 +31,18 @@ security enforcement. The reviewed Worker code and absence of audio-upload
 and tracking paths remain part of the application design; that is not a claim
 of identical host security headers.
 
-Historical checks below establish only the exact scope and revision stated.
-They do not establish that the new Pages URL resolves, that a new workflow has
-run on GitHub, or that hosted runtime loading, cancellation and exports work.
-Those observations must be recorded after deployment. No customer utility,
-detection accuracy, adoption, offline operation or licence expansion is claimed.
+The [first manual Pages run](https://github.com/mingyeomjung-alt/dsp-workbench/actions/runs/39529608807)
+completed successfully for commit `e5da21d4ffa1a2610fe4cf31ef3720bfc13f5aa5`.
+On the public HTTPS origin, the direct example action downloaded the example
+and runtime, ran the actual engine, and displayed **Review required** with one
+deletion at **2.0-2.1 s**, output boundary **2.0 s**. Both JSON and HTML downloads
+completed. Playback was not started automatically; no new listening or
+independently opened HTML-export check is claimed. Cancellation is covered by
+controlled lifecycle tests, not a new hosted-origin manual cancellation test.
+The final onboarding refinement scrolls the completed quick-example result
+into view; it does not alter DSP results. Historical checks below establish
+only the exact scope and revision stated. No customer utility, detection
+accuracy, adoption, offline operation or licence expansion is claimed.
 
 ## English presentation check — 2026-10-17
 

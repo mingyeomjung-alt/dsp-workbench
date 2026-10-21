@@ -19,8 +19,8 @@
     },
     {
       "path": "web/app.js",
-      "bytes": 38778,
-      "sha256": "e196c6ccc143d7dc463c9b92f87175eb12ffafdcae4e209736cdf33acf5817f3"
+      "bytes": 38904,
+      "sha256": "c320f2e737314c8f520da498be1e44cf35a914131819fbc64c91fb475ccb3f9c"
     },
     {
       "path": "web/dsp-worker.js",

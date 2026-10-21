@@ -586,6 +586,7 @@
     if (busy || demoLoading) return;
     setMode("pair");
     await demo(true);
+    if (!busy && resultPayload && mode === "pair") $("results-panel").scrollIntoView({ block: "start", behavior: "smooth" });
   }
   function download(kind) {
     if (!resultPayload) return;

@@ -21,7 +21,7 @@ class Target {
 }
 class Element extends Target {
   children = []; parentNode = null; attributes = new Map(); dataset = {}; hidden = false; disabled = false; checked = false; value = ""; _text = ""; _class = "";
-  readyState = 4; currentTime = 0; ended = false; pauseCount = 0; playCount = 0;
+  readyState = 4; currentTime = 0; ended = false; pauseCount = 0; playCount = 0; scrollCount = 0;
   constructor(tag = "div") { super(); this.tagName = tag.toUpperCase(); this.classList = {add: (...v) => { this._class = [...new Set([...this._class.split(/\s+/).filter(Boolean), ...v])].join(" "); }, remove: (...v) => { this._class = this._class.split(/\s+/).filter((s) => !v.includes(s)).join(" "); }, toggle: (v, force) => { const has = this._class.split(/\s+/).includes(v), yes = force === undefined ? !has : !!force; if (yes) this.classList.add(v); else this.classList.remove(v); return yes; }, contains: (v) => this._class.split(/\s+/).includes(v)}; }
   set className(value) { this._class = value; } get className() { return this._class; }
   set textContent(value) { this._text = String(value); this.children = []; } get textContent() { return this._text + this.children.map((child) => child.textContent).join(""); }
@@ -33,6 +33,7 @@ class Element extends Target {
   removeAttribute(key) { this.attributes.delete(key); if (key === "srcdoc") delete this.srcdoc; if (key === "src") delete this.src; }
   remove() { if (this.parentNode) this.parentNode.children.splice(this.parentNode.children.indexOf(this), 1); this.parentNode = null; }
   pause() { this.pauseCount++; } load() {} async play() { this.playCount++; if (this.playDeferred) await this.playDeferred.promise; }
+  scrollIntoView() { this.scrollCount++; }
   click() { return this.fire("click"); } showModal() { this.open = true; } close() { this.open = false; }
   getBoundingClientRect() { return {left: 0, top: 0, right: 100, bottom: 100}; }
 }
@@ -102,6 +103,7 @@ test("quick example switches from suite and runs actual orchestration without au
   assert.equal(h.fixture.pair.entries.candidate.audio.playCount, 0);
   await success(h); await pending;
   assert.equal(h.ids.get("quick-demo-button").disabled, false); assert.ok(h.fixture.state.resultPayload);
+  assert.equal(h.ids.get("results-panel").scrollCount, 1);
 });
 test("quick example double activation makes only one download and stale edits prevent autorun", async () => {
   const h = harness(); const pending = h.ids.get("quick-demo-button").fire("click")[0];
@@ -109,6 +111,7 @@ test("quick example double activation makes only one download and stale edits pr
   const manual = h.file("manual.wav"); h.fixture.setFile(h.fixture.pair, "source", manual);
   h.fetches.forEach((request) => request.resolve({ok: true, blob: async () => new Blob([wav])})); await pending;
   assert.equal(h.workers.length, 0); assert.equal(h.fixture.pair.files.source, manual);
+  assert.equal(h.ids.get("results-panel").scrollCount, 0);
   assert.equal(h.ids.get("quick-demo-button").disabled, false);
 });
 test("quick example download failure leaves a retryable control and no false result", async () => {
@@ -117,6 +120,7 @@ test("quick example download failure leaves a retryable control and no false res
   assert.equal(h.ids.get("error-code").textContent, "demo_load_failed");
   assert.equal(h.ids.get("quick-demo-button").disabled, false); assert.equal(h.workers.length, 0);
   assert.equal(h.fixture.state.resultPayload, null);
+  assert.equal(h.ids.get("results-panel").scrollCount, 0);
 });
 test("loading an example alone does not start analysis or playback", async () => {
   const h = harness(); const pending = h.ids.get("demo-button").fire("click")[0];
